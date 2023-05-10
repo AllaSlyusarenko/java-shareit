@@ -8,7 +8,6 @@ public class ShareItApp {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ShareItApp.class, args);
-		System.out.println("Ghbdtb");
 	}
 
 }
