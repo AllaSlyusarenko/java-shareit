@@ -1,6 +1,7 @@
 package ru.practicum.shareit.user;
 
-import org.hibernate.validator.constraints.UniqueElements;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -8,11 +9,13 @@ import javax.validation.constraints.Positive;
 /**
  * TODO Sprint add-controllers.
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class User {
-    @Positive
-    private long id;
-    @NotBlank
+    private Long id;
     private String name;
-    @NotBlank
-    private String email; // два пользователя не могут иметь одинаковый адрес электр почты
+    private String email;
 }

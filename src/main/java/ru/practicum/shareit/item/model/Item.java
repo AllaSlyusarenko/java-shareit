@@ -1,7 +1,6 @@
 package ru.practicum.shareit.item.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
@@ -14,17 +13,16 @@ import javax.validation.constraints.Size;
 /**
  * TODO Sprint add-controllers.
  */
-@Data
-@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class Item {
-    @Positive
     private long id;
-    @NotBlank
     private String name;
-    @Size(max = 200)
     private String description;
-    private String available;//возможно boolean, возможно enum
-    @NotNull
+    private boolean available;
     private User owner; // или DTO
     private ItemRequest request;// если создан по запросу, тут ссылка на запрос
 }
