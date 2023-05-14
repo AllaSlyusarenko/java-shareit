@@ -29,10 +29,10 @@ public class ItemMapper {
         );
     }
 
-    public List<ItemDto> itemsToDto(List<Item> items){
+    public static List<ItemDto> itemsToDto(List<Item> items){
         return items.stream().map(x-> itemToDto(x)).collect(Collectors.toList());
     }
-    public List<Item> dtosToItem(List<ItemDto> dtos){
+    public static List<Item> dtosToItem(List<ItemDto> dtos){
         return dtos.stream().map(x-> dtoToItem(x)).collect(Collectors.toList());
     }
 

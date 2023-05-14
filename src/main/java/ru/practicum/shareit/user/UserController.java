@@ -31,7 +31,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public UserDto saveUser(@Validated(UserDto.New.class) @RequestBody UserDto userDto) {
+    public UserDto saveUser(@Validated(UserDto.NewUser.class) @RequestBody UserDto userDto) {
         log.info("Создание нового пользователя");
         User user = UserMapper.dtoToUser(userDto);
         user = userService.saveUser(user);

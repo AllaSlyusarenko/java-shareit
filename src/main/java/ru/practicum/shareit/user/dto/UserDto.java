@@ -11,20 +11,20 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class UserDto {
-    @Null(groups = {New.class})
+    @Null(groups = {NewUser.class})
     @JsonProperty("id")
     private Long id;
 
-    @NotBlank(groups = {New.class})
+    @NotBlank(groups = {NewUser.class})
     @JsonProperty("name")
     private String name;
 
-    @NotBlank(groups = {New.class})
-    @Email(groups = {New.class})
+    @NotBlank(groups = {NewUser.class})
+    @Email(groups = {NewUser.class})
     @JsonProperty("email")
     private String email;
 
-    public interface New {
+    public interface NewUser {
     }
 
     interface Exist {

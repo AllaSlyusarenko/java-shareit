@@ -1,7 +1,13 @@
 package ru.practicum.shareit.item;
 
-import org.springframework.stereotype.Service;
+import ru.practicum.shareit.item.model.Item;
 
-@Service
-public class ItemService {
+import java.util.List;
+
+public interface ItemService {
+    public Item saveItem(Long userId, Item item);
+
+    public Item findItemById(Long userId, Long id);
+
+    public List<Item> findAllUserItems(Long userId);
 }

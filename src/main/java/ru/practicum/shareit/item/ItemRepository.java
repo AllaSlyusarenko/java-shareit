@@ -1,11 +1,13 @@
 package ru.practicum.shareit.item;
 
-import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.item.model.Item;
 
-import java.util.HashMap;
+import java.util.List;
 
-@Repository
-public class ItemRepository {
-    HashMap<Long, Item> items = new HashMap<>();
+public interface ItemRepository {
+    public Item saveItem(Long userId, Item item);
+
+    public Item findItemById(Long userId, Long id);
+
+    public List<Item> findAllUserItems(Long userId);
 }
