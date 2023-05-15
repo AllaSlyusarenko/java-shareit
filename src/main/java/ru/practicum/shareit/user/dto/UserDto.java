@@ -23,13 +23,4 @@ public class UserDto {
     @Email(groups = {NewUser.class})
     @JsonProperty("email")
     private String email;
-
-    public interface NewUser {
-    }
-
-    interface Exist {
-    }
-
-    public interface UpdateAll extends Exist {
-    }
 }

@@ -2,17 +2,11 @@ package ru.practicum.shareit.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    //Для сервисов и репозиториев.
-    // Во-первых, так мы сможем реализовать принцип инверсии зависимостей,
-    // а во-вторых, у сервисов и репозиториев могут быть другие реализации
-    // (очень редко на практике случается)
-
     private UserRepository userRepository;
 
     @Autowired

@@ -7,9 +7,6 @@ import ru.practicum.shareit.user.User;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
-/**
- * TODO Sprint add-item-requests.
- */
 @Data
 @Builder
 public class ItemRequest {
@@ -18,7 +15,7 @@ public class ItemRequest {
     @Size(max = 200)
     private String description;
     @NotNull
-    private User requestor; // или DTO
+    private User requestor;
     @FutureOrPresent
     private LocalDateTime created;
 }

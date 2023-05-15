@@ -1,7 +1,6 @@
 package ru.practicum.shareit.item;
 
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
 
@@ -19,12 +18,27 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item findItemById(Long userId, Long id) {
-        return itemRepository.findItemById(userId, id);
+    public Item findItemById(Long id) {
+        return itemRepository.findItemById(id);
     }
 
     @Override
     public List<Item> findAllUserItems(Long userId) {
         return itemRepository.findAllUserItems(userId);
+    }
+
+    @Override
+    public Item updateItem(Long userId, Long id, String name, String description, Boolean available) {
+        return itemRepository.updateItem(userId, id, name, description, available);
+    }
+
+    @Override
+    public List<Item> findItemByNameOrDescription(String text) {
+        return itemRepository.findItemByNameOrDescription(text);
+    }
+
+    @Override
+    public void deleteItemById(Long id) {
+        itemRepository.deleteItemById(id);
     }
 }
