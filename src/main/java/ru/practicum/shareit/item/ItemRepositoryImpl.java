@@ -44,7 +44,7 @@ public class ItemRepositoryImpl implements ItemRepository {
     public List<Item> findAllUserItems(Long userId) {
         User user = userRepository.findUserById(userId);
         List userItems = items.values().stream()
-                .filter(x -> x.getOwner() == userId)
+                .filter(x -> x.getOwner().equals(userId))
                 .collect(Collectors.toList());
         return userItems;
     }
@@ -53,7 +53,7 @@ public class ItemRepositoryImpl implements ItemRepository {
     public Item updateItem(Long userId, Long id, String name, String description, Boolean available) {
         User user = userRepository.findUserById(userId);
         Item itemInHistory = findItemById(id);
-        if (userId != itemInHistory.getOwner()) {
+        if (!userId.equals(itemInHistory.getOwner())) {
             throw new NotFoundException("Редактировать вещь может только её владелец");
         }
         if (name == null && description == null && isNull(available)) {
