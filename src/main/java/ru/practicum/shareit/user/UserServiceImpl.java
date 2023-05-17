@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Long id, String name, String email) {
-        return userRepository.updateUser(id, name, email);
+    public User updateUser(Long id, User user) {
+        return userRepository.updateUser(id, user);
     }
 
     @Override

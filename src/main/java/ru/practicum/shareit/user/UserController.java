@@ -16,13 +16,11 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    private final UserMapper userMapper;
     private final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userMapper = userMapper;
     }
 
     @PostMapping
@@ -35,7 +33,6 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public UserDto getUserById(@PathVariable(value = "id") Long id) {
         log.info("Просмотр пользователя по идентификатору");
         User user = userService.findUserById(id);
@@ -43,7 +40,6 @@ public class UserController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getAllUsers() {
         log.info("Просмотр всех пользователей");
         List<User> getAll = userService.findAllUsers();
@@ -51,16 +47,15 @@ public class UserController {
     }
 
     @PatchMapping("/{idUser}")
-    @ResponseStatus(HttpStatus.OK)
     public UserDto updateUser(@PathVariable(value = "idUser") Long id,
                               @RequestBody UserDto userDto) {
         log.info("Обновление пользователя");
-        User user = userService.updateUser(id, userDto.getName(), userDto.getEmail());
+        User user = UserMapper.dtoToUser(userDto);
+        user = userService.updateUser(id, user);
         return UserMapper.userToDto(user);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public void deleteUserById(@PathVariable(value = "id") Long id) {
         log.info("Пользователь удален");
         userService.deleteUserById(id);

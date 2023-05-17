@@ -10,7 +10,7 @@ public interface UserRepository {
 
     public List<User> findAllUsers();
 
-    public User updateUser(Long id, String name, String email);
+    public User updateUser(Long id, User user);
 
     public void deleteUserById(Long id);
 }

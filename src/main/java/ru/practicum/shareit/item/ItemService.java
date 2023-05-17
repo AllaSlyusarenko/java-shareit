@@ -9,9 +9,9 @@ public interface ItemService {
 
     public List<Item> findAllUserItems(Long userId);
 
-    public Item updateItem(Long userId, Long id, String name, String description, Boolean available);
+    public Item updateItem(Long userId, Long id, Item item);
 
-    public List<Item> findItemByNameOrDescription(String text);
+    public List<Item> findItemByNameOrDescription(Long userId, String text);
 
     public void deleteItemById(Long id);
 }

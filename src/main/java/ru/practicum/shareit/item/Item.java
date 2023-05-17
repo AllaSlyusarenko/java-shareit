@@ -2,6 +2,7 @@ package ru.practicum.shareit.item;
 
 import lombok.*;
 import ru.practicum.shareit.request.ItemRequest;
+import ru.practicum.shareit.user.User;
 
 @Getter
 @Setter
@@ -9,10 +10,10 @@ import ru.practicum.shareit.request.ItemRequest;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class Item {
-    private long id;
+    private Long id;
     private String name;
     private String description;
     private Boolean available;
-    private Long owner; // userId
-    private ItemRequest request;// если создан по запросу, тут ссылка на запрос
+    private User owner;
+    private ItemRequest request;
 }

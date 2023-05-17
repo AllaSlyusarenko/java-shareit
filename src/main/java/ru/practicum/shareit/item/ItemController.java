@@ -15,12 +15,10 @@ import java.util.List;
 @RequestMapping("/items")
 public class ItemController {
     private final ItemService itemService;
-    private final ItemMapper itemMapper;
     private final Logger log = LoggerFactory.getLogger(ItemController.class);
 
-    public ItemController(ItemService itemService, ItemMapper itemMapper) {
+    public ItemController(ItemService itemService) {
         this.itemService = itemService;
-        this.itemMapper = itemMapper;
     }
 
     @PostMapping
@@ -28,13 +26,12 @@ public class ItemController {
     public ItemDto saveItem(@RequestHeader("X-Sharer-User-Id") Long userId,
                             @Validated(NewItem.class) @RequestBody ItemDto itemDto) {
         log.info("Создание новой вещи");
-        Item item = itemMapper.dtoToItem(itemDto);
+        Item item = ItemMapper.dtoToItem(itemDto);
         item = itemService.saveItem(userId, item);
-        return itemMapper.itemToDto(item);
+        return ItemMapper.itemToDto(item);
     }
 
     @GetMapping("/{itemId}")
-    @ResponseStatus(HttpStatus.OK)
     public ItemDto getItemById(@RequestHeader("X-Sharer-User-Id") Long userId,
                                @PathVariable(value = "itemId") Long id) {
         log.info("Просмотр вещи по идентификатору");
@@ -43,7 +40,6 @@ public class ItemController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<ItemDto> getAllUserItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
         log.info("Просмотр владельцем всех своих вещей");
         List<Item> items = itemService.findAllUserItems(userId);
@@ -51,27 +47,25 @@ public class ItemController {
     }
 
     @PatchMapping("/{itemId}")
-    @ResponseStatus(HttpStatus.OK)
     public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") Long userId,
                               @PathVariable(value = "itemId") Long id,
                               @RequestBody ItemDto itemDto) {
         log.info("Обновление вещи");
-        Item item = itemService.updateItem(userId, id, itemDto.getName(), itemDto.getDescription(), itemDto.getAvailable());
+        Item item = ItemMapper.dtoToItem(itemDto);
+        item = itemService.updateItem(userId, id, item);
         return ItemMapper.itemToDto(item);
 
     }
 
     @GetMapping("/search")
-    @ResponseStatus(HttpStatus.OK)
     public List<ItemDto> getItemByNameOrDescription(@RequestHeader("X-Sharer-User-Id") Long userId,
                                                     @RequestParam("text") String text) {
         log.info("Поиск вещи по названию или описанию");
-        List<Item> items = itemService.findItemByNameOrDescription(text);
+        List<Item> items = itemService.findItemByNameOrDescription(userId, text);
         return ItemMapper.itemsToDto(items);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public void deleteItemById(@PathVariable(value = "id") Long id) {
         log.info("Вещь удалена");
         itemService.deleteItemById(id);
