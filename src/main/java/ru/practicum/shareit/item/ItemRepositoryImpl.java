@@ -15,7 +15,7 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     private HashMap<Long, Item> items = new HashMap<>();
     private HashMap<Long, List<Item>> itemsByUser = new HashMap<>();
-    private static Long globalItemId = 1L;
+    private Long globalItemId = 1L;
 
     @Override
     public Item saveItem(Long userId, Item item) {
@@ -27,7 +27,6 @@ public class ItemRepositoryImpl implements ItemRepository {
         }
         List<Item> userItems = itemsByUser.get(userId);
         userItems.add(item);
-        itemsByUser.put(userId, userItems);
         return item;
     }
 

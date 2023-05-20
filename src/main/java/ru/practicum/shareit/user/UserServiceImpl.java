@@ -2,6 +2,8 @@ package ru.practicum.shareit.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.dto.UserMapper;
 
 import java.util.List;
 
@@ -15,23 +17,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
-        return userRepository.saveUser(user);
+    public UserDto saveUser(UserDto userDto) {
+        User user = UserMapper.dtoToUser(userDto);
+        user = userRepository.saveUser(user);
+        return UserMapper.userToDto(user);
     }
 
     @Override
-    public User findUserById(Long id) {
-        return userRepository.findUserById(id);
+    public UserDto findUserById(Long id) {
+        User user = userRepository.findUserById(id);
+        return UserMapper.userToDto(user);
     }
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAllUsers();
+    public List<UserDto> findAllUsers() {
+        List<User> getAll = userRepository.findAllUsers();
+        return UserMapper.usersToDto(getAll);
     }
 
     @Override
-    public User updateUser(Long id, User user) {
-        return userRepository.updateUser(id, user);
+    public UserDto updateUser(Long id, UserDto userDto) {
+        User user = UserMapper.dtoToUser(userDto);
+        user = userRepository.updateUser(id, user);
+        return UserMapper.userToDto(user);
     }
 
     @Override

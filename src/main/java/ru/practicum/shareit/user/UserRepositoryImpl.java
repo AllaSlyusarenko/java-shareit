@@ -10,7 +10,7 @@ import java.util.*;
 public class UserRepositoryImpl implements UserRepository {
     private HashMap<Long, User> users = new HashMap<>();
     private Set<String> emails = new HashSet<>();
-    private static Long globalUserId = 1L;
+    private Long globalUserId = 1L;
 
     @Override
     public User saveUser(User userIn) {
