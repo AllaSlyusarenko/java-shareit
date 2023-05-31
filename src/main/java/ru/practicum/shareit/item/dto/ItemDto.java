@@ -3,13 +3,14 @@ package ru.practicum.shareit.item.dto;
 import lombok.*;
 
 import javax.validation.constraints.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class ItemDto {
+public class ItemDto{
     @Null(groups = {NewItem.class})
     private Long id;
 
