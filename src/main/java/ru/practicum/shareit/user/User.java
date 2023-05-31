@@ -6,8 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Getter @Setter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -20,4 +19,7 @@ public class User {
 
     @Column(name = "email",unique = true)
     private String email;
+
+    //надо ли переопределить equals hashcode???
+
 }

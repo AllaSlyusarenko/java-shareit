@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import static java.util.Objects.isNull;
 
 @Repository
-public class ItemRepositoryImpl implements ItemRepository {
+public class ItemRepositoryImpl  implements ItemRepository{
 
     private HashMap<Long, Item> items = new HashMap<>();
     private HashMap<Long, List<Item>> itemsByUser = new HashMap<>();
