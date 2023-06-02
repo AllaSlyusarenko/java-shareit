@@ -7,7 +7,7 @@ import ru.practicum.shareit.user.User;
 import javax.persistence.*;
 @Entity
 @Table(name = "items")
-@Getter @Setter
+@Getter @Setter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)

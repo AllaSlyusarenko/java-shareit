@@ -3,7 +3,6 @@ package ru.practicum.shareit.user.dto;
 import lombok.*;
 
 import javax.validation.constraints.*;
-import java.io.Serializable;
 
 @Getter
 @Setter

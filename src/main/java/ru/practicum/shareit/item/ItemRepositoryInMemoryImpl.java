@@ -1,6 +1,5 @@
 package ru.practicum.shareit.item;
 
-import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.NotFoundException;
 
 import java.util.ArrayList;
@@ -10,14 +9,14 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
-@Repository
-public class ItemRepositoryImpl  implements ItemRepository{
+//@Repository
+public class ItemRepositoryInMemoryImpl{
 
     private HashMap<Long, Item> items = new HashMap<>();
     private HashMap<Long, List<Item>> itemsByUser = new HashMap<>();
     private Long globalItemId = 1L;
 
-    @Override
+
     public Item saveItem(Long userId, Item item) {
         item.setId(generateItemId());
         items.put(item.getId(), item);
@@ -30,7 +29,7 @@ public class ItemRepositoryImpl  implements ItemRepository{
         return item;
     }
 
-    @Override
+
     public Item findItemById(Long id) {
         Item item = items.get(id);
         if (item == null) {
@@ -39,12 +38,12 @@ public class ItemRepositoryImpl  implements ItemRepository{
         return item;
     }
 
-    @Override
+
     public List<Item> findAllUserItems(Long userId) {
         return itemsByUser.get(userId);
     }
 
-    @Override
+
     public Item updateItem(Long userId, Long id, Item item) {
         Item itemInHistory = findItemById(id);
         if (!userId.equals(itemInHistory.getOwner().getId())) {
@@ -67,7 +66,7 @@ public class ItemRepositoryImpl  implements ItemRepository{
         return itemInHistory;
     }
 
-    @Override
+
     public List<Item> findItemByNameOrDescription(String text) {
         List<Item> result = new ArrayList<>();
         if (text.isBlank()) {
@@ -91,7 +90,7 @@ public class ItemRepositoryImpl  implements ItemRepository{
         return result;
     }
 
-    @Override
+
     public void deleteItemById(Long id) {
         Item item = findItemById(id);
         itemsByUser.get(item.getOwner()).remove(item);

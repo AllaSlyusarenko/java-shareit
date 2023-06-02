@@ -1,18 +1,17 @@
 package ru.practicum.shareit.user;
 
-import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.ConflictValidationException;
 import ru.practicum.shareit.exception.NotFoundException;
 
 import java.util.*;
 
-@Repository
-public class UserRepositoryImpl implements UserRepository {
+//@Repository
+public class UserRepositoryInMemoryImpl {
     private HashMap<Long, User> users = new HashMap<>();
     private Set<String> emails = new HashSet<>();
     private Long globalUserId = 1L;
 
-    @Override
+
     public User saveUser(User userIn) {
         if (emails.contains(userIn.getEmail())) {
             throw new ConflictValidationException("Данный email уже есть в системе, выберите другой email");
@@ -23,7 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
         return userOut;
     }
 
-    @Override
+
     public User findUserById(Long id) {
         User user = users.get(id);
         if (user == null) {
@@ -32,12 +31,12 @@ public class UserRepositoryImpl implements UserRepository {
         return user;
     }
 
-    @Override
+
     public List<User> findAllUsers() {
         return new ArrayList<>(users.values());
     }
 
-    @Override
+
     public User updateUser(Long id, User user) {
         User userInHistory = findUserById(id);
         if (!userInHistory.getEmail().equals(user.getEmail()) && emails.contains(user.getEmail())) {
@@ -55,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
         return userInHistory;
     }
 
-    @Override
+
     public void deleteUserById(Long id) {
         User user = findUserById(id);
         emails.remove(user.getEmail());
