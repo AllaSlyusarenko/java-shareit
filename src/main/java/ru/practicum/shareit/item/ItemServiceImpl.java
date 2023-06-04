@@ -1,16 +1,21 @@
 package ru.practicum.shareit.item;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.shareit.booking.Booking;
+import ru.practicum.shareit.booking.BookingRepository;
+import ru.practicum.shareit.booking.Status;
+import ru.practicum.shareit.booking.dto.BookingMapper;
+import ru.practicum.shareit.booking.dto.BookingShort;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
+import ru.practicum.shareit.item.dto.ItemOwnerDto;
+import ru.practicum.shareit.item.dto.ItemShort;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
 
 
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,10 +25,12 @@ import java.util.Optional;
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
+    private final BookingRepository bookingRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository, UserRepository userRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, UserRepository userRepository, BookingRepository bookingRepository) {
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     @Override
@@ -38,23 +45,57 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto findItemById(Long id) {
+    public ItemShort findItemById(Long userId, Long id) {
+        LocalDateTime now = LocalDateTime.now();
         Optional<Item> item = itemRepository.findById(id);
-        //Item item = itemRepository.getReferenceById(id);
         if (!item.isPresent()) {
             throw new NotFoundException("Вещь с id" + id + " не найдена");
         }
-        return ItemMapper.itemToDto(item.get());
-    }
-
-    @Override
-    public List<ItemDto> findAllUserItems(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
             throw new NotFoundException("Пользователь с id" + userId + " не найден");
         }
+        if (item.get().getOwner().getId() == userId) {
+            Booking lastBookingFull = bookingRepository.findFirstByItemAndEndIsBeforeOrderByEndDesc(item.get(), now);
+            if (lastBookingFull != null && lastBookingFull.getStatus() == Status.REJECTED) {
+                lastBookingFull = null;
+            }
+            Booking nextBookingFull = bookingRepository.findFirstByItemAndStartIsAfterOrderByStart(item.get(), now);
+            if (nextBookingFull != null && nextBookingFull.getStatus() == Status.REJECTED) {
+                nextBookingFull = null;
+            }
+            BookingShort lastBooking = BookingMapper.mapToBookingShort(lastBookingFull);
+            BookingShort nextBooking = BookingMapper.mapToBookingShort(nextBookingFull);
+            return ItemMapper.itemShortDto(item.get(), lastBooking, nextBooking);
+        }
+        return ItemMapper.itemShortDto(item.get(), null, null);
+    }
+
+    @Override
+    public List<ItemShort> findAllUserItems(Long userId) { // владелец вещи
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new NotFoundException("Пользователь с id" + userId + " не найден");
+        }
+        LocalDateTime now = LocalDateTime.now();
+        List<ItemShort> itemsOwner = new ArrayList<>();
         List<Item> items = itemRepository.findAllByOwner(user.get());
-        return ItemMapper.itemsToDto(items);
+        for (Item item : items) {
+            Booking lastBookingFull = bookingRepository.findFirstByItemAndEndIsBeforeOrderByEndDesc(item, now);
+            if (lastBookingFull != null && lastBookingFull.getStatus() == Status.REJECTED) {
+                lastBookingFull = null;
+            }
+            Booking nextBookingFull = bookingRepository.findFirstByItemAndStartIsAfterOrderByStart(item, now);
+            if (nextBookingFull != null && nextBookingFull.getStatus() == Status.REJECTED) {
+                nextBookingFull = null;
+            }
+            BookingShort lastBooking = BookingMapper.mapToBookingShort(lastBookingFull);
+            BookingShort nextBooking = BookingMapper.mapToBookingShort(nextBookingFull);
+            ItemShort dtoToAdd = ItemMapper.itemShortDto(item, lastBooking, nextBooking);
+            itemsOwner.add(dtoToAdd);
+        }
+        return itemsOwner;
+
     }
 
     @Override
@@ -80,7 +121,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> findItemByNameOrDescription(Long userId, String text) {
-        if(text.isBlank()){
+        if (text.isBlank()) {
             return ItemMapper.itemsToDto(new ArrayList<>());
         }
         Optional<User> user = userRepository.findById(userId);

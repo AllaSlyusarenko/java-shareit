@@ -49,4 +49,15 @@ public class BookingMapper {
         return booking;
     }
 
+    public static BookingShort mapToBookingShort(Booking booking) {
+        BookingShort bookingShort = new BookingShort();
+        if (booking == null) {
+            return null;
+        }
+        bookingShort.setId(booking.getId());
+        bookingShort.setBookerId(booking.getBooker().getId());
+        return bookingShort;
+    }
+
+
 }

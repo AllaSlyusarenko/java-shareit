@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemOwnerDto;
+import ru.practicum.shareit.item.dto.ItemShort;
 import ru.practicum.shareit.item.dto.NewItem;
 
 import java.util.List;
@@ -30,14 +32,14 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ItemDto getItemById(@RequestHeader("X-Sharer-User-Id") Long userId,
-                               @PathVariable(value = "itemId") Long id) {
+    public ItemShort getItemById(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                 @PathVariable(value = "itemId") Long id) {
         log.info("Просмотр вещи по идентификатору");
-        return itemService.findItemById(id);
+        return itemService.findItemById(userId, id);
     }
 
     @GetMapping
-    public List<ItemDto> getAllUserItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<ItemShort> getAllUserItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
         log.info("Просмотр владельцем всех своих вещей");
         return itemService.findAllUserItems(userId);
     }
