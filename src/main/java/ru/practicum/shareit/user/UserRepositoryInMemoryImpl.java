@@ -11,7 +11,6 @@ public class UserRepositoryInMemoryImpl {
     private Set<String> emails = new HashSet<>();
     private Long globalUserId = 1L;
 
-
     public User saveUser(User userIn) {
         if (emails.contains(userIn.getEmail())) {
             throw new ConflictValidationException("Данный email уже есть в системе, выберите другой email");

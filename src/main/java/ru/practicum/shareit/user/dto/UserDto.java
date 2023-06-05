@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class UserDto{
+public class UserDto {
     @Null(groups = {NewUser.class})
     private Long id;
 
