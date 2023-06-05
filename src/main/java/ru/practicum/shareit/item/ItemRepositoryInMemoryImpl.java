@@ -10,8 +10,7 @@ import java.util.stream.Collectors;
 import static java.util.Objects.isNull;
 
 //@Repository
-public class ItemRepositoryInMemoryImpl{
-
+public class ItemRepositoryInMemoryImpl {
     private HashMap<Long, Item> items = new HashMap<>();
     private HashMap<Long, List<Item>> itemsByUser = new HashMap<>();
     private Long globalItemId = 1L;
@@ -73,15 +72,9 @@ public class ItemRepositoryInMemoryImpl{
             return result;
         }
         String textLowCase = text.toLowerCase();
-        List<Item> itemsByName = items.values().stream()
-                .filter(x -> x.getName().toLowerCase().contains(textLowCase))
-                .filter(x -> x.getAvailable().equals(true))
-                .collect(Collectors.toList());
+        List<Item> itemsByName = items.values().stream().filter(x -> x.getName().toLowerCase().contains(textLowCase)).filter(x -> x.getAvailable().equals(true)).collect(Collectors.toList());
 
-        List<Item> itemsByDescription = items.values().stream()
-                .filter(x -> x.getDescription().toLowerCase().contains(textLowCase))
-                .filter(x -> x.getAvailable().equals(true))
-                .collect(Collectors.toList());
+        List<Item> itemsByDescription = items.values().stream().filter(x -> x.getDescription().toLowerCase().contains(textLowCase)).filter(x -> x.getAvailable().equals(true)).collect(Collectors.toList());
 
         result.addAll(itemsByName);
         result.addAll(itemsByDescription);
