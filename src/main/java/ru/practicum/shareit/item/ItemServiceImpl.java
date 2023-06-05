@@ -59,7 +59,8 @@ public class ItemServiceImpl implements ItemService {
             throw new NotFoundException("Пользователь с id" + userId + " не найден");
         }
         List<Comment> comments = commentRepository.findAllByItem(item.get());
-        if (item.get().getOwner().getId() == userId) { // просмотр вещи собственником
+        Long ownerId = item.get().getOwner().getId();
+        if (ownerId == userId) { // просмотр вещи собственником
             Booking lastBookingFull = bookingRepository.findFirstByItemAndEndIsBeforeOrderByEndDesc(item.get(), now);
             if (lastBookingFull != null && lastBookingFull.getStatus() == Status.REJECTED) {
                 lastBookingFull = null;

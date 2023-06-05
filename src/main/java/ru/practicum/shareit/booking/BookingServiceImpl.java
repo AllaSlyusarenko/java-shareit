@@ -47,7 +47,8 @@ public class BookingServiceImpl implements BookingService {
         if (!item.get().getAvailable()) {
             throw new ValidationException("Вещь с id " + item.get().getId() + " на данный момент недоступна");
         }
-        if (userId == item.get().getOwner().getId()) {
+        Long ownerId = item.get().getOwner().getId();
+        if (userId == ownerId) {
             throw new NotFoundException("Хозяин не может быть и заказчиком данной вещи одновременно");
         }
         Booking booking = BookingMapper.mapToBooking(bookingRequestDto, user.get(), item.get());
@@ -67,7 +68,8 @@ public class BookingServiceImpl implements BookingService {
         if (!booking.isPresent()) {
             throw new NotFoundException("Запрос с id" + bookingId + " не найден");
         }
-        if (booking.get().getItem().getOwner().getId() != userId) {
+        Long ownerId = booking.get().getItem().getOwner().getId();
+        if (ownerId != userId) {
             throw new NotFoundException("Только владелец вещи может подтверждать запрос");
         }
         if (!booking.get().getStatus().equals(Status.WAITING)) {
@@ -94,7 +96,9 @@ public class BookingServiceImpl implements BookingService {
         if (!booking.isPresent()) {
             throw new NotFoundException("Запрос с id" + bookingId + " не найден");
         }
-        if (userId != booking.get().getBooker().getId() && userId != booking.get().getItem().getOwner().getId()) {
+        Long bookerId = booking.get().getBooker().getId();
+        Long ownerId = booking.get().getItem().getOwner().getId();
+        if (userId != bookerId && userId != ownerId) {
             throw new NotFoundException("Информация о бронировании доступна только владельцу или автору бронирования");
         }
 
