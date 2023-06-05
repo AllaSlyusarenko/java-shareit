@@ -6,6 +6,8 @@ import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentMapper {
@@ -22,9 +24,16 @@ public class CommentMapper {
         CommentResponse commentResponse = new CommentResponse();
         commentResponse.setId(comment.getId());
         commentResponse.setText(comment.getText());
-        commentResponse.setItem(comment.getItem());
         commentResponse.setAuthorName(comment.getAuthor().getName());
         commentResponse.setCreated(comment.getCreated());
         return commentResponse;
+    }
+
+    public static List<CommentResponse> mapToCommentResponseList(List<Comment> comments) {
+        List<CommentResponse> commentResponseList = new ArrayList<>();
+        for (Comment comment : comments) {
+            commentResponseList.add(mapToCommentResponse(comment));
+        }
+        return commentResponseList;
     }
 }

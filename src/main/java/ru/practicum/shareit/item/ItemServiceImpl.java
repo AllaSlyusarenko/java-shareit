@@ -15,7 +15,6 @@ import ru.practicum.shareit.item.dto.ItemShort;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +58,9 @@ public class ItemServiceImpl implements ItemService {
             throw new NotFoundException("Пользователь с id" + userId + " не найден");
         }
         List<Comment> comments = commentRepository.findAllByItem(item.get());
+        List<CommentResponse> commentsResponse = CommentMapper.mapToCommentResponseList(comments);
         if (item.get().getOwner().getId().equals(userId)) { // просмотр вещи собственником
-            Booking lastBookingFull = bookingRepository.findFirstByItemAndEndIsBeforeOrderByEndDesc(item.get(), now);
+            Booking lastBookingFull = bookingRepository.findFirstByItemAndStartIsBeforeOrStartEqualsOrderByStartDesc(item.get(), now, now);
             if (lastBookingFull != null && lastBookingFull.getStatus() == Status.REJECTED) {
                 lastBookingFull = null;
             }
@@ -70,9 +70,9 @@ public class ItemServiceImpl implements ItemService {
             }
             BookingShort lastBooking = BookingMapper.mapToBookingShort(lastBookingFull);
             BookingShort nextBooking = BookingMapper.mapToBookingShort(nextBookingFull);
-            return ItemMapper.itemShortDto(item.get(), lastBooking, nextBooking, comments);
+            return ItemMapper.itemShortDto(item.get(), lastBooking, nextBooking, commentsResponse);
         }
-        return ItemMapper.itemShortDto(item.get(), null, null, comments); // просмотр вещи всеми остальными
+        return ItemMapper.itemShortDto(item.get(), null, null, commentsResponse); // просмотр вещи всеми остальными
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ItemServiceImpl implements ItemService {
         List<ItemShort> itemsOwner = new ArrayList<>();
         List<Item> items = itemRepository.findAllByOwner(user.get());
         for (Item item : items) {
-            Booking lastBookingFull = bookingRepository.findFirstByItemAndEndIsBeforeOrderByEndDesc(item, now);
+            Booking lastBookingFull = bookingRepository.findFirstByItemAndStartIsBeforeOrStartEqualsOrderByStartDesc(item, now, now);
             if (lastBookingFull != null && lastBookingFull.getStatus() == Status.REJECTED) {
                 lastBookingFull = null;
             }
@@ -96,7 +96,8 @@ public class ItemServiceImpl implements ItemService {
             BookingShort lastBooking = BookingMapper.mapToBookingShort(lastBookingFull);
             BookingShort nextBooking = BookingMapper.mapToBookingShort(nextBookingFull);
             List<Comment> comments = commentRepository.findAllByItem(item);
-            ItemShort dtoToAdd = ItemMapper.itemShortDto(item, lastBooking, nextBooking, comments);
+            List<CommentResponse> commentsResponse = CommentMapper.mapToCommentResponseList(comments);
+            ItemShort dtoToAdd = ItemMapper.itemShortDto(item, lastBooking, nextBooking, commentsResponse);
             itemsOwner.add(dtoToAdd);
         }
         return itemsOwner;

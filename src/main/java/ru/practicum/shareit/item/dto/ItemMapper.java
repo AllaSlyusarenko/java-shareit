@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import ru.practicum.shareit.booking.dto.BookingShort;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.comment.Comment;
+import ru.practicum.shareit.item.comment.CommentResponse;
 import ru.practicum.shareit.user.User;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ItemMapper {
         return dtos;
     }
 
-    public static ItemShort itemShortDto(Item item, BookingShort lastBooking, BookingShort nextBooking, List<Comment> comments) {
+    public static ItemShort itemShortDto(Item item, BookingShort lastBooking, BookingShort nextBooking, List<CommentResponse> comments) {
         ItemShort itemShort = new ItemShort();
         itemShort.setId(item.getId());
         itemShort.setName(item.getName());
