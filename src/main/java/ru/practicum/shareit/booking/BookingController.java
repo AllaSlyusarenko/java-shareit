@@ -1,15 +1,11 @@
 package ru.practicum.shareit.booking;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookingRequestDto;
 import ru.practicum.shareit.booking.dto.BookingResponseDto;
-import ru.practicum.shareit.booking.dto.NewBooking;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -60,9 +56,8 @@ public class BookingController {
 
     @GetMapping("/owner")
     public List<BookingResponseDto> allBookingOwner(@RequestHeader("X-Sharer-User-Id") Long ownerId,
-                                                   @RequestParam(defaultValue = "ALL", required = false) String state) {
+                                                    @RequestParam(defaultValue = "ALL", required = false) String state) {
         log.info("Получение списка всех бронирований владельца");
         return bookingService.allBookingOwner(ownerId, state);
     }
-
 }

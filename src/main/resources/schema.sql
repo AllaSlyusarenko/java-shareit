@@ -46,5 +46,6 @@ create TABLE IF NOT EXISTS comments (
   text VARCHAR(512) NOT NULL,
   item_id  BIGINT NOT NULL REFERENCES items(id) ON delete CASCADE,
   author_id  BIGINT NOT NULL REFERENCES users(id) ON delete CASCADE,
+  created TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   CONSTRAINT pk_comments PRIMARY KEY (id)
 );

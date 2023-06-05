@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.comment.CommentRequest;
+import ru.practicum.shareit.item.comment.CommentResponse;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemOwnerDto;
 import ru.practicum.shareit.item.dto.ItemShort;
 import ru.practicum.shareit.item.dto.NewItem;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -63,5 +65,13 @@ public class ItemController {
     public void deleteItemById(@PathVariable(value = "id") Long id) {
         log.info("Вещь удалена");
         itemService.deleteItemById(id);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentResponse saveComment(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                       @PathVariable(value = "itemId") Long id,
+                                       @Valid @RequestBody CommentRequest commentRequest) {
+        log.info("Создание новой вещи");
+        return itemService.saveComment(userId, id, commentRequest);
     }
 }

@@ -2,10 +2,9 @@ package ru.practicum.shareit.item.dto;
 
 import lombok.*;
 import ru.practicum.shareit.booking.dto.BookingShort;
+import ru.practicum.shareit.item.comment.Comment;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,4 +18,5 @@ public class ItemShort {
     private Boolean available;
     private BookingShort lastBooking;
     private BookingShort nextBooking;
+    private List<Comment> comments;
 }

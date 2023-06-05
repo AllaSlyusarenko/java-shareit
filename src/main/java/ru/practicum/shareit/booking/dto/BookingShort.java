@@ -10,5 +10,4 @@ import lombok.*;
 public class BookingShort {
     private Long id;
     private Long bookerId;
-
 }

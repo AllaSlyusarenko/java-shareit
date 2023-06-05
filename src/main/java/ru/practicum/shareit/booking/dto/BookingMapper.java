@@ -1,25 +1,17 @@
 package ru.practicum.shareit.booking.dto;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookingMapper {
     public static BookingResponseDto mapToBookingResponseDto(Booking booking) {
-//        String dateOfStartToDto = DateTimeFormatter
-//                .ofPattern("yyyy.MM.dd hh:mm:ss")
-//                .withZone(ZoneOffset.UTC)
-//                .format(booking.getStart());
-//        String dateOfEndToDto = DateTimeFormatter
-//                .ofPattern("yyyy.MM.dd hh:mm:ss")
-//                .withZone(ZoneOffset.UTC)
-//                .format(booking.getEnd());
         BookingResponseDto bookingResponseDto = new BookingResponseDto();
         bookingResponseDto.setId(booking.getId());
         bookingResponseDto.setStart(booking.getStart());
@@ -27,7 +19,6 @@ public class BookingMapper {
         bookingResponseDto.setItem(booking.getItem());
         bookingResponseDto.setBooker(booking.getBooker());
         bookingResponseDto.setStatus(booking.getStatus());
-
         return bookingResponseDto;
     }
 
@@ -38,7 +29,6 @@ public class BookingMapper {
         }
         return dtos;
     }
-
 
     public static Booking mapToBooking(BookingRequestDto bookingRequestDto, User user, Item item) {
         Booking booking = new Booking();
@@ -58,6 +48,4 @@ public class BookingMapper {
         bookingShort.setBookerId(booking.getBooker().getId());
         return bookingShort;
     }
-
-
 }

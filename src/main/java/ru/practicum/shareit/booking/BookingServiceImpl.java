@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 @Transactional(readOnly = true)
 public class BookingServiceImpl implements BookingService {
@@ -33,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public BookingResponseDto saveBooking(Long userId, BookingRequestDto bookingRequestDto) { // букер
+    public BookingResponseDto saveBooking(Long userId, BookingRequestDto bookingRequestDto) {
         if (!isValidDate(bookingRequestDto.getStart(), bookingRequestDto.getEnd())) {
             throw new ValidationException("Дата окончания должна быть позже, чем дата начала, и дата начала не можнт быть в прошлом");
         }
@@ -52,9 +51,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NotFoundException("Хозяин не может быть и заказчиком данной вещи одновременно");
         }
         Booking booking = BookingMapper.mapToBooking(bookingRequestDto, user.get(), item.get());
-        //проверить статус
         booking.setStatus(Status.WAITING);
-        //booking.setBooker(user.get());
         Booking bookingSave = bookingRepository.save(booking);
         return BookingMapper.mapToBookingResponseDto(bookingSave);
     }
@@ -107,18 +104,18 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<BookingResponseDto> allBookingUser(Long userId, String state) {
         Optional<User> user = userRepository.findById(userId);
-        LocalDateTime nowS = LocalDateTime.now();
-        LocalDateTime nowE = LocalDateTime.now();
         if (!user.isPresent()) {
             throw new NotFoundException("Пользователь с id" + userId + " не найден");
         }
+        LocalDateTime nowS = LocalDateTime.now();
+        LocalDateTime nowE = LocalDateTime.now();
         List<Booking> result = new ArrayList<>();
         switch (state) {
             case ("ALL"):
                 result.addAll(bookingRepository.findAllByBookerOrderByStartDesc(user.get()));
                 break;
             case ("CURRENT"):
-                result.addAll(bookingRepository.findAllByBookerAndStartIsBeforeAndEndIsAfterOrderByStartDesc(user.get(), nowS, nowE));
+                result.addAll(bookingRepository.findAllByBookerAndStartIsBeforeAndEndIsAfterOrderByStart(user.get(), nowS, nowE));
                 break;
             case ("PAST"):
                 result.addAll(bookingRepository.findAllByBookerAndEndIsBeforeOrderByStartDesc(user.get(), nowE));
@@ -137,25 +134,24 @@ public class BookingServiceImpl implements BookingService {
             default:
                 throw new ValidationException("Unknown state: " + state);
         }
-
         return BookingMapper.mapToBookingResponseDto(result);
     }
 
     @Override
     public List<BookingResponseDto> allBookingOwner(Long ownerId, String state) {
         Optional<User> user = userRepository.findById(ownerId);
-        LocalDateTime nowS = LocalDateTime.now();
-        LocalDateTime nowE = LocalDateTime.now();
         if (!user.isPresent()) {
             throw new NotFoundException("Пользователь с id" + ownerId + " не найден");
         }
+        LocalDateTime nowS = LocalDateTime.now();
+        LocalDateTime nowE = LocalDateTime.now();
         List<Booking> result = new ArrayList<>();
         switch (state) {
             case ("ALL"):
                 result.addAll(bookingRepository.findAllByItem_OwnerOrderByStartDesc(user.get()));
                 break;
             case ("CURRENT"):
-                result.addAll(bookingRepository.findAllByItem_OwnerAndStartIsBeforeAndEndIsAfterOrderByStartDesc(user.get(), nowS, nowE));
+                result.addAll(bookingRepository.findAllByItem_OwnerAndStartIsBeforeAndEndIsAfterOrderByStart(user.get(), nowS, nowE));
                 break;
             case ("PAST"):
                 result.addAll(bookingRepository.findAllByItem_OwnerAndEndIsBeforeOrderByStartDesc(user.get(), nowE));
@@ -174,7 +170,6 @@ public class BookingServiceImpl implements BookingService {
             default:
                 throw new ValidationException("Unknown state: " + state);
         }
-
         return BookingMapper.mapToBookingResponseDto(result);
     }
 
