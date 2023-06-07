@@ -7,7 +7,6 @@ import ru.practicum.shareit.user.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
     public static UserDto userToDto(User user) {
@@ -32,5 +31,4 @@ public class UserMapper {
     public static List<User> dtosToUser(List<UserDto> dtos) {
         return dtos.stream().map(x -> dtoToUser(x)).collect(Collectors.toList());
     }
-
 }

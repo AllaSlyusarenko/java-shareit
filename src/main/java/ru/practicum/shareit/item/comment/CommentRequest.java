@@ -13,4 +13,3 @@ public class CommentRequest {
     @NotBlank
     private String text;
 }
-

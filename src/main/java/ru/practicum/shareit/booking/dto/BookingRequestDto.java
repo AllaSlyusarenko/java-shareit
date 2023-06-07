@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class BookingRequestDto {
-
     @NotNull
     @JsonProperty("itemId")
     private Long itemId;
