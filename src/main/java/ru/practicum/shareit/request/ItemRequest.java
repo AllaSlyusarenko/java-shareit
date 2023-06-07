@@ -1,11 +1,5 @@
 package ru.practicum.shareit.request;
 
-import lombok.*;
-import ru.practicum.shareit.user.User;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
 //@Entity
 //@Table(name = "requests")
 //@Getter
