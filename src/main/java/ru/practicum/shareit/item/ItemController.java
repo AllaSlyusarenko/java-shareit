@@ -1,23 +1,25 @@
 package ru.practicum.shareit.item;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.comment.CommentRequest;
+import ru.practicum.shareit.item.comment.CommentResponse;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemShort;
 import ru.practicum.shareit.item.dto.NewItem;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("/items")
+@RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
-
-    public ItemController(ItemService itemService) {
-        this.itemService = itemService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -28,14 +30,14 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ItemDto getItemById(@RequestHeader("X-Sharer-User-Id") Long userId,
-                               @PathVariable(value = "itemId") Long id) {
+    public ItemShort getItemById(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                 @PathVariable(value = "itemId") Long id) {
         log.info("Просмотр вещи по идентификатору");
-        return itemService.findItemById(id);
+        return itemService.findItemById(userId, id);
     }
 
     @GetMapping
-    public List<ItemDto> getAllUserItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<ItemShort> getAllUserItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
         log.info("Просмотр владельцем всех своих вещей");
         return itemService.findAllUserItems(userId);
     }
@@ -59,5 +61,13 @@ public class ItemController {
     public void deleteItemById(@PathVariable(value = "id") Long id) {
         log.info("Вещь удалена");
         itemService.deleteItemById(id);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentResponse saveComment(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                       @PathVariable(value = "itemId") Long id,
+                                       @Valid @RequestBody CommentRequest commentRequest) {
+        log.info("Создание новой вещи");
+        return itemService.saveComment(userId, id, commentRequest);
     }
 }

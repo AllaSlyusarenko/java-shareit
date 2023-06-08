@@ -1,16 +1,22 @@
 package ru.practicum.shareit.request;
 
-import lombok.Builder;
-import lombok.Data;
-import ru.practicum.shareit.user.User;
-
-import java.time.LocalDateTime;
-
-@Data
-@Builder
+//@Entity
+//@Table(name = "requests")
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder(toBuilder = true)
 public class ItemRequest {
-    private Long id;
-    private String description;
-    private User requestor;
-    private LocalDateTime created;
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//    private String description;
+//    @ManyToOne
+//    @JoinColumn(name = "requestor_id")
+//    private User requestor;
+//
+//    @Column(name = "created_date")
+//    private LocalDateTime created;
 }

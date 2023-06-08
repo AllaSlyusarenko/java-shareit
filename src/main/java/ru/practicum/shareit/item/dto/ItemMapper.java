@@ -2,11 +2,13 @@ package ru.practicum.shareit.item.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import ru.practicum.shareit.booking.dto.BookingShort;
 import ru.practicum.shareit.item.Item;
+import ru.practicum.shareit.item.comment.CommentResponse;
 import ru.practicum.shareit.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ItemMapper {
@@ -30,6 +32,22 @@ public class ItemMapper {
     }
 
     public static List<ItemDto> itemsToDto(List<Item> items) {
-        return items.stream().map(x -> itemToDto(x)).collect(Collectors.toList());
+        List<ItemDto> dtos = new ArrayList<>();
+        for (Item item : items) {
+            dtos.add(itemToDto(item));
+        }
+        return dtos;
+    }
+
+    public static ItemShort itemShortDto(Item item, BookingShort lastBooking, BookingShort nextBooking, List<CommentResponse> comments) {
+        ItemShort itemShort = new ItemShort();
+        itemShort.setId(item.getId());
+        itemShort.setName(item.getName());
+        itemShort.setDescription(item.getDescription());
+        itemShort.setAvailable(item.getAvailable());
+        itemShort.setLastBooking(lastBooking);
+        itemShort.setNextBooking(nextBooking);
+        itemShort.setComments(comments);
+        return itemShort;
     }
 }
