@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import ru.practicum.shareit.booking.dto.BookingShort;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.comment.CommentResponse;
+import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
 import java.util.ArrayList;
@@ -18,16 +19,18 @@ public class ItemMapper {
         itemDto.setName(item.getName());
         itemDto.setDescription(item.getDescription());
         itemDto.setAvailable(item.getAvailable());
+        itemDto.setRequestId(item.getRequest() != null ? item.getRequest().getId() : null);
         return itemDto;
     }
 
-    public static Item dtoToItem(User user, ItemDto itemDto) {
+    public static Item dtoToItem(User user, ItemDto itemDto, ItemRequest itemRequest) {
         Item item = new Item();
         item.setId(itemDto.getId());
         item.setName(itemDto.getName());
         item.setDescription(itemDto.getDescription());
         item.setAvailable(itemDto.getAvailable());
         item.setOwner(user);
+        item.setRequest(itemRequest);
         return item;
     }
 
