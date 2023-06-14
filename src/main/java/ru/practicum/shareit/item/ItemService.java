@@ -12,11 +12,11 @@ public interface ItemService {
 
     public ItemShort findItemById(Long userId, Long id);
 
-    public List<ItemShort> findAllUserItems(Long userId);
+    public List<ItemShort> findAllUserItems(Long userId, Integer from, Integer size);
 
     public ItemDto updateItem(Long userId, Long id, ItemDto itemDto);
 
-    public List<ItemDto> findItemByNameOrDescription(Long userId, String text);
+    public List<ItemDto> findItemByNameOrDescription(Long userId, String text, Integer from, Integer size);
 
     public void deleteItemById(Long id);
 

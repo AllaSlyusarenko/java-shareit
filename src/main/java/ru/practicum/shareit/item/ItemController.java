@@ -37,9 +37,11 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemShort> getAllUserItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<ItemShort> getAllUserItems(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                           @RequestParam(value = "from", defaultValue = "0") Integer from,
+                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
         log.info("Просмотр владельцем всех своих вещей");
-        return itemService.findAllUserItems(userId);
+        return itemService.findAllUserItems(userId, from, size);
     }
 
     @PatchMapping("/{itemId}")
@@ -52,9 +54,11 @@ public class ItemController {
 
     @GetMapping("/search")
     public List<ItemDto> getItemByNameOrDescription(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                                    @RequestParam("text") String text) {
+                                                    @RequestParam("text") String text,
+                                                    @RequestParam(value = "from", defaultValue = "0") Integer from,
+                                                    @RequestParam(value = "size", defaultValue = "10") Integer size) {
         log.info("Поиск вещи по названию или описанию");
-        return itemService.findItemByNameOrDescription(userId, text);
+        return itemService.findItemByNameOrDescription(userId, text, from, size);
     }
 
     @DeleteMapping("/{id}")

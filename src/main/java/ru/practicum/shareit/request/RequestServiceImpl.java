@@ -70,9 +70,12 @@ public class RequestServiceImpl implements RequestService {
         return result;
     }
 
-
     @Override
     public RequestResponseGetDto findRequestById(Long userId, Long id) { // любой пользователь - ItemDto
-        return null;
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        Request request = requestRepository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        List<Item> items = itemRepository.findAllByRequest(request);
+        List<ItemDto> itemsDtoForRequest = ItemMapper.itemsToDto(items);
+        return RequestMapper.mapToItemResponseGet(request, itemsDtoForRequest);
     }
 }

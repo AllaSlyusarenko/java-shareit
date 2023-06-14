@@ -34,8 +34,8 @@ public class RequestController {
 
     @GetMapping("/all")
     public List<RequestResponseGetDto> getRequestFromOtherUsers(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                                                 @RequestParam(value = "from", defaultValue = "0") Integer from,
-                                                                 @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                                                                @RequestParam(value = "from", defaultValue = "0") Integer from,
+                                                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
         log.info("Просмотр списка запросов других пользователей");
         return requestService.findRequestFromOtherUsers(userId, from, size);
     }
@@ -46,6 +46,4 @@ public class RequestController {
         log.info("Просмотр запроса по идентификатору");
         return requestService.findRequestById(userId, id);
     }
-
-
 }

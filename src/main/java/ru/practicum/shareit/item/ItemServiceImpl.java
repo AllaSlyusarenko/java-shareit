@@ -1,6 +1,8 @@
 package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.Booking;
@@ -71,11 +73,15 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemShort> findAllUserItems(Long userId) { // владелец вещи
+    public List<ItemShort> findAllUserItems(Long userId, Integer from, Integer size) { // владелец вещи
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        if (from < 0 || size <= 0) {
+            throw new ValidationException("from должно быть неотрицательное и size положительное");
+        }
+        Pageable pageable = PageRequest.of(from, size);
         LocalDateTime now = LocalDateTime.now();
         List<ItemShort> itemsOwner = new ArrayList<>();
-        List<Item> items = itemRepository.findAllByOwner(user);
+        List<Item> items = itemRepository.findAllByOwner(user, pageable);
         for (Item item : items) {
             Booking lastBookingFull = bookingRepository.findFirstByItemAndStartIsBeforeOrStartEqualsOrderByStartDesc(item, now, now);
             if (lastBookingFull != null && lastBookingFull.getStatus() == Status.REJECTED) {
@@ -115,12 +121,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> findItemByNameOrDescription(Long userId, String text) {
+    public List<ItemDto> findItemByNameOrDescription(Long userId, String text, Integer from, Integer size) {
         if (text.isBlank()) {
             return ItemMapper.itemsToDto(new ArrayList<>());
         }
+        if (from < 0 || size <= 0) {
+            throw new ValidationException("from должно быть неотрицательное и size положительное");
+        }
+        Pageable pageable = PageRequest.of(from, size);
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
-        List<Item> items = itemRepository.search(text);
+        List<Item> items = itemRepository.search(text, pageable);
         return ItemMapper.itemsToDto(items);
     }
 
