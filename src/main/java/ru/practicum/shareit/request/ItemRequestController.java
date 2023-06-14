@@ -11,6 +11,7 @@ import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.dto.ItemResponseGetDto;
 import ru.practicum.shareit.request.dto.ItemResponsePostDto;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @Slf4j
@@ -36,8 +37,8 @@ public class ItemRequestController {
 
     @GetMapping("/all")
     public List<ItemResponseGetDto> getItemRequestFromOtherUsers(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                                                 @RequestParam("from") Long from,
-                                                                 @RequestParam("size") Long size) {
+                                                                 @RequestParam(value = "from", required = false) Long from,
+                                                                 @RequestParam(value = "size", required = false) Long size) {
         log.info("Просмотр списка запросов других пользователей");
         return itemRequestService.findItemRequestFromOtherUsers(userId, from, size);
     }

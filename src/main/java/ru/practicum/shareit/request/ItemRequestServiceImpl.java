@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.dto.ItemDto;
@@ -49,8 +50,27 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
     @Override
     public List<ItemResponseGetDto> findItemRequestFromOtherUsers(Long userId, Long from, Long size) { //запросы других пользователей
-        return null;
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        List<ItemResponseGetDto> result = new ArrayList<>();
+        if (from == null && size == null) { // без пагинации
+            List<ItemRequest> itemRequests = new ArrayList<>(itemRequestRepository.findAllByRequestorNot(user));
+            if (!itemRequests.isEmpty()) {
+                for (ItemRequest itemRequest : itemRequests) {
+                    List<Item> itemsForEachRequest = itemRepository.findAllByRequest(itemRequest);
+                    List<ItemDto> itemsDtoForEachRequest = ItemMapper.itemsToDto(itemsForEachRequest);
+                    result.add(ItemRequestMapper.mapToItemResponseGet(itemRequest, itemsDtoForEachRequest));
+                }
+            }
+            return result;
+        }
+        if (from < 0 || size <= 0) {
+            throw new ValidationException("from должно быть неотрицательное и size положительное");
+        }
+
+
+        return result;
     }
+
 
     @Override
     public ItemResponseGetDto findItemRequestById(Long userId, Long id) { // любой пользователь - ItemDto
