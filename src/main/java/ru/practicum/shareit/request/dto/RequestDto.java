@@ -11,14 +11,14 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class ItemRequestDto {
-    @Null(groups = {NewItemRequest.class})
+public class RequestDto {
+    @Null(groups = {NewRequest.class})
     private Long id;
 
     @Size(max = 200)
-    @NotBlank(groups = {NewItemRequest.class})
+    @NotBlank(groups = {NewRequest.class})
     private String description;
 
-    public interface NewItemRequest {
+    public interface NewRequest {
     }
 }
