@@ -57,7 +57,7 @@ public class RequestServiceImpl implements RequestService {
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pageable pageable = PageRequest.of(from, size, Sort.by("created").descending());
+        Pageable pageable = PageRequest.of(from / size, size, Sort.by("created").descending());
         List<Request> requests = new ArrayList<>(requestRepository.findAllByRequestorNot(user, pageable));
         List<RequestResponseGetDto> result = new ArrayList<>();
         if (!requests.isEmpty()) {

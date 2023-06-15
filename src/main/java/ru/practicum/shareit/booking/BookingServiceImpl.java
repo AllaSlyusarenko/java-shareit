@@ -86,7 +86,7 @@ public class BookingServiceImpl implements BookingService {
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pageable pageable = PageRequest.of(from, size, Sort.by("end").descending());
+        Pageable pageable = PageRequest.of(from / size, size, Sort.by("end").descending());
         LocalDateTime nowS = LocalDateTime.now();
         LocalDateTime nowE = LocalDateTime.now();
         List<Booking> result = new ArrayList<>();
@@ -123,7 +123,7 @@ public class BookingServiceImpl implements BookingService {
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pageable pageable = PageRequest.of(from, size, Sort.by("start").descending());
+        Pageable pageable = PageRequest.of(from / size, size, Sort.by("start").descending());
         LocalDateTime nowS = LocalDateTime.now();
         LocalDateTime nowE = LocalDateTime.now();
         List<Booking> result = new ArrayList<>();
