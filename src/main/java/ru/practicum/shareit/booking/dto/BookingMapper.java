@@ -22,7 +22,7 @@ public class BookingMapper {
         return bookingResponseDto;
     }
 
-    public static List<BookingResponseDto> mapToBookingResponseDto(Iterable<Booking> bookings) {
+    public static List<BookingResponseDto> mapToBookingResponseDto(List<Booking> bookings) {
         List<BookingResponseDto> dtos = new ArrayList<>();
         for (Booking booking : bookings) {
             dtos.add(mapToBookingResponseDto(booking));
