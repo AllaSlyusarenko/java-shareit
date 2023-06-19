@@ -32,10 +32,10 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public BookingResponseDto saveBooking(Long userId, BookingRequestDto bookingRequestDto) {
         if (!isValidDate(bookingRequestDto.getStart(), bookingRequestDto.getEnd())) {
-            throw new ValidationException("Дата окончания должна быть позже, чем дата начала, и дата начала не можнт быть в прошлом");
+            throw new ValidationException("Дата окончания должна быть позже, чем дата начала, и дата начала не может быть в прошлом");
         }
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
-        Item item = itemRepository.findById(bookingRequestDto.getItemId()).orElseThrow(() -> new NotFoundException("Вещь с id" + bookingRequestDto.getItemId() + " не найдена"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
+        Item item = itemRepository.findById(bookingRequestDto.getItemId()).orElseThrow(() -> new NotFoundException("Вещь с id " + bookingRequestDto.getItemId() + " не найдена"));
         if (!item.getAvailable()) {
             throw new ValidationException("Вещь с id " + item.getId() + " на данный момент недоступна");
         }
@@ -51,8 +51,8 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public BookingResponseDto approveBooking(Long userId, Long bookingId, String approved) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Запрос с id" + bookingId + " не найден"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Запрос с id " + bookingId + " не найден"));
         if (!booking.getItem().getOwner().getId().equals(userId)) {
             throw new NotFoundException("Только владелец вещи может подтверждать запрос");
         }
@@ -72,8 +72,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponseDto infoBooking(Long userId, Long bookingId) { // кто просматривает - или автор брони, или владелец вещи
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Запрос с id" + bookingId + " не найден"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Запрос с id " + bookingId + " не найден"));
         if (!booking.getBooker().getId().equals(userId) && !booking.getItem().getOwner().getId().equals(userId)) {
             throw new NotFoundException("Информация о бронировании доступна только владельцу или автору бронирования");
         }
@@ -82,7 +82,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingResponseDto> allBookingUser(Long userId, String state, Integer from, Integer size) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
@@ -119,7 +119,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingResponseDto> allBookingOwner(Long ownerId, String state, Integer from, Integer size) {
-        User user = userRepository.findById(ownerId).orElseThrow(() -> new NotFoundException("Пользователь с id" + ownerId + " не найден"));
+        User user = userRepository.findById(ownerId).orElseThrow(() -> new NotFoundException("Пользователь с id " + ownerId + " не найден"));
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
