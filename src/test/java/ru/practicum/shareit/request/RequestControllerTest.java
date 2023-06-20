@@ -213,6 +213,7 @@ class RequestControllerTest {
                 .andExpect(jsonPath("$.items").isEmpty());
         verify(requestService, times(1)).findRequestById(Mockito.anyLong(), Mockito.anyLong());
     }
+
     @Test
     @DirtiesContext
     void getRequestById_shouldNotGetRequest_whenDataWrong() throws Exception {
@@ -225,11 +226,11 @@ class RequestControllerTest {
                 .thenReturn(requestResponseGetDto);
         //then
         mvc.perform(get("/requests/1")
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .header("X-Sharer-User-Id", "qwerty")
-                ).andExpect(status().isBadRequest());
+                .characterEncoding(StandardCharsets.UTF_8)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .header("X-Sharer-User-Id", "qwerty")
+        ).andExpect(status().isBadRequest());
         verify(requestService, never()).findRequestById(Mockito.anyLong(), Mockito.anyLong());
     }
 }
