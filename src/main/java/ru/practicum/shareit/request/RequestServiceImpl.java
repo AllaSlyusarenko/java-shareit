@@ -32,15 +32,15 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestResponsePostDto saveRequest(Long userId, RequestDto requestDto) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
-        Request itemRequest = RequestMapper.mapToItemRequest(requestDto, user);
-        Request itemRequestSave = requestRepository.save(itemRequest);
-        return RequestMapper.mapToItemResponsePost(itemRequestSave);
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
+        Request request = RequestMapper.mapToItemRequest(requestDto, user);
+        Request requestSave = requestRepository.save(request);
+        return RequestMapper.mapToItemResponsePost(requestSave);
     }
 
     @Override
     public List<RequestResponseGetDto> findRequestByUserId(Long userId) { // свои запросы
-        User userRequestor = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        User userRequestor = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         List<Request> requests = requestRepository.findAllByRequestorOrderByCreatedDesc(userRequestor);
         List<RequestResponseGetDto> result = new ArrayList<>();
         for (Request request : requests) {
@@ -53,7 +53,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<RequestResponseGetDto> findRequestFromOtherUsers(Long userId, Integer from, Integer size) { //запросы других пользователей
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
@@ -72,8 +72,8 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestResponseGetDto findRequestById(Long userId, Long id) { // любой пользователь - ItemDto
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
-        Request request = requestRepository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
+        Request request = requestRepository.findById(id).orElseThrow(() -> new NotFoundException("Запрос с id " + id + " не найден"));
         List<Item> items = itemRepository.findAllByRequest(request);
         List<ItemDto> itemsDtoForRequest = ItemMapper.itemsToDto(items);
         return RequestMapper.mapToItemResponseGet(request, itemsDtoForRequest);
