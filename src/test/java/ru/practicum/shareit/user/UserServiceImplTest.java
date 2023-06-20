@@ -119,8 +119,10 @@ class UserServiceImplTest {
         //given
         User user = User.builder().id(1L).name("name").email("name@ya.ru").build();
         UserDto userDtoIn = UserDto.builder().id(1L).name("name2").email("name2@ya.ru").build();
+        User userSave = User.builder().id(1L).name("name2").email("name2@ya.ru").build();
         //when
         when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(user));
+        when(userRepository.save(Mockito.any(User.class))).thenReturn(userSave);
         UserDto userDto = userService.updateUser(1L, userDtoIn);
         //then
         assertThat(userDto, instanceOf(UserDto.class));
