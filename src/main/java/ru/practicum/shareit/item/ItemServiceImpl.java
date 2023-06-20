@@ -38,7 +38,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public ItemDto saveItem(Long userId, ItemDto itemDto) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         Request request = null;
         if (itemDto.getRequestId() != null) {
             request = requestRepository.findById(itemDto.getRequestId()).orElseThrow(() -> new NotFoundException("Запрос не найден"));
@@ -52,8 +52,8 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public ItemShort findItemById(Long userId, Long id) {
         LocalDateTime now = LocalDateTime.now();
-        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id" + id + " не найдена"));
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id " + id + " не найдена"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         List<Comment> comments = commentRepository.findAllByItem(item);
         List<CommentResponse> commentsResponse = CommentMapper.mapToCommentResponseList(comments);
         if (item.getOwner().getId().equals(userId)) { // просмотр вещи собственником
@@ -74,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemShort> findAllUserItems(Long userId, Integer from, Integer size) { // владелец вещи
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
@@ -104,8 +104,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public ItemDto updateItem(Long userId, Long id, ItemDto itemDto) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
-        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id" + id + " не найдена"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
+        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id " + id + " не найдена"));
         if (itemDto.getName() != null) {
             item.setName(itemDto.getName());
         }
@@ -129,7 +129,7 @@ public class ItemServiceImpl implements ItemService {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
         Pageable pageable = PageRequest.of(from / size, size);
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         List<Item> items = itemRepository.search(text, pageable);
         return ItemMapper.itemsToDto(items);
     }
@@ -142,12 +142,12 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public CommentResponse saveComment(Long userId, Long id, CommentRequest commentRequest) {
         LocalDateTime now = LocalDateTime.now();
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id" + userId + " не найден"));
-        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id" + id + " не найдена"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
+        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id " + id + " не найдена"));
         Booking booking =
                 bookingRepository.findFirstByBookerAndItemAndEndIsBeforeOrderByEndDesc(user, item, now);
         if (booking == null) {
-            throw new ValidationException("Пользователь c id" + userId + " не использовал вещь c id" + id);
+            throw new ValidationException("Пользователь c id " + userId + " не использовал вещь c id " + id);
         }
         Comment comment = CommentMapper.mapToComment(commentRequest, user, item, now);
         Comment commentSave = commentRepository.save(comment);

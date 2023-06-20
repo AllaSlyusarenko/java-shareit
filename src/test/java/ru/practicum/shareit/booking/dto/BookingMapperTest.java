@@ -12,7 +12,6 @@ import ru.practicum.shareit.user.User;
 import java.time.LocalDateTime;
 
 class BookingMapperTest {
-
     @Test
     @DirtiesContext
     void mapToBookingResponseDto() {
