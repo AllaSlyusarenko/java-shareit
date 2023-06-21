@@ -1,5 +1,6 @@
 package ru.practicum.shareit.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.shareit.user.User;
 
@@ -24,5 +25,6 @@ public class Request {
     private User requestor;
 
     @Column(name = "created_date")
+    @JsonFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime created;
 }

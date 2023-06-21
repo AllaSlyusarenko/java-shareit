@@ -10,7 +10,5 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     List<Request> findAllByRequestorOrderByCreatedDesc(User user);
 
-    List<Request> findAllByRequestorNot(User user);
-
     List<Request> findAllByRequestorNot(User user, Pageable pageable);
 }

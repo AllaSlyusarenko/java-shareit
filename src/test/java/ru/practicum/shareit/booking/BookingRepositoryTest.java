@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.DirtiesContext;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.ItemRepository;
-import ru.practicum.shareit.request.RequestRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
 
@@ -31,9 +30,9 @@ class BookingRepositoryTest {
     @Test
     @DirtiesContext
     void findAllByBookerOrderByStartDesc() {
-        LocalDateTime start1 = LocalDateTime.of(2024, 03, 15, 22, 15, 15);
+        LocalDateTime start1 = LocalDateTime.of(2024, 3, 15, 22, 15, 15);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         User user = User.builder().id(1L).name("name").email("name@ya.ru").build();
         User booker = User.builder().id(2L).name("name2").email("name2@ya.ru").build();
@@ -62,9 +61,9 @@ class BookingRepositoryTest {
     @Test
     @DirtiesContext
     void findAllByItem_OwnerOrderByStartDesc() {
-        LocalDateTime start1 = LocalDateTime.of(2024, 03, 15, 22, 15, 15);
+        LocalDateTime start1 = LocalDateTime.of(2024, 3, 15, 22, 15, 15);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
         User booker = User.builder().id(2L).name("name2").email("name2@ya.ru").build();
@@ -93,9 +92,9 @@ class BookingRepositoryTest {
     @Test
     @DirtiesContext
     void findAllByBookerAndStatusEqualsOrderByStartDesc() {
-        LocalDateTime start1 = LocalDateTime.of(2024, 03, 15, 22, 15, 15);
+        LocalDateTime start1 = LocalDateTime.of(2024, 3, 15, 22, 15, 15);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
         User booker = User.builder().id(2L).name("name2").email("name2@ya.ru").build();
@@ -120,9 +119,9 @@ class BookingRepositoryTest {
     @Test
     @DirtiesContext
     void findAllByItem_OwnerAndStatusEqualsOrderByStartDesc() {
-        LocalDateTime start1 = LocalDateTime.of(2024, 03, 15, 22, 15, 15);
+        LocalDateTime start1 = LocalDateTime.of(2024, 3, 15, 22, 15, 15);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
         User booker = User.builder().id(2L).name("name2").email("name2@ya.ru").build();
@@ -149,7 +148,7 @@ class BookingRepositoryTest {
     void findAllByBookerAndStartIsBeforeAndEndIsAfterOrderByStart() {
         LocalDateTime start1 = LocalDateTime.now().plusMinutes(5);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         LocalDateTime timeBetween = LocalDateTime.now().plusMinutes(10);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
@@ -179,7 +178,7 @@ class BookingRepositoryTest {
     void findAllByItem_OwnerAndStartIsBeforeAndEndIsAfterOrderByStart() {
         LocalDateTime start1 = LocalDateTime.now().plusMinutes(5);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         LocalDateTime timeBetween = LocalDateTime.now().plusMinutes(10);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
@@ -209,7 +208,7 @@ class BookingRepositoryTest {
     void findAllByBookerAndEndIsBeforeOrderByStartDesc() {
         LocalDateTime start1 = LocalDateTime.now().plusMinutes(5);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         LocalDateTime timeAfter = LocalDateTime.now().plusDays(10);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
@@ -239,7 +238,7 @@ class BookingRepositoryTest {
     void findAllByItem_OwnerAndEndIsBeforeOrderByStartDesc() {
         LocalDateTime start1 = LocalDateTime.now().plusMinutes(5);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         LocalDateTime timeAfter = LocalDateTime.now().plusDays(10);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
@@ -269,7 +268,7 @@ class BookingRepositoryTest {
     void findAllByBookerAndStartIsAfterOrderByStartDesc() {
         LocalDateTime start1 = LocalDateTime.now().plusMinutes(5);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         LocalDateTime timeBefore = LocalDateTime.now().minusDays(10);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
@@ -304,7 +303,7 @@ class BookingRepositoryTest {
     void findAllByItem_OwnerAndStartIsAfterOrderByStartDesc() {
         LocalDateTime start1 = LocalDateTime.now().plusMinutes(5);
         LocalDateTime end1 = start1.plusDays(1);
-        LocalDateTime start2 = LocalDateTime.of(2025, 03, 15, 22, 15, 15);
+        LocalDateTime start2 = LocalDateTime.of(2025, 3, 15, 22, 15, 15);
         LocalDateTime end2 = start2.plusDays(1);
         LocalDateTime timeBefore = LocalDateTime.now().minusDays(10);
         User owner = User.builder().id(1L).name("name").email("name@ya.ru").build();
