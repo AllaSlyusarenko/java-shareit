@@ -65,7 +65,6 @@ class RequestRepositoryTest {
         requestRepository.save(request1);
         requestRepository.save(request2);
         requestRepository.save(request3);
-
         List<Request> requests = requestRepository.findAllByRequestorNot(requestor, Pageable.unpaged());
         assertEquals(1, requests.size());
         assertEquals(requests.get(0).getId(), 3L);
