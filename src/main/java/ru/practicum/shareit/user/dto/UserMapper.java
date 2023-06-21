@@ -1,6 +1,7 @@
 package ru.practicum.shareit.user.dto;
 
 import lombok.AccessLevel;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.user.User;
 
@@ -24,10 +25,12 @@ public class UserMapper {
         );
     }
 
+    @Generated
     public static List<UserDto> usersToDto(List<User> users) {
         return users.stream().map(x -> userToDto(x)).collect(Collectors.toList());
     }
 
+    @Generated
     public static List<User> dtosToUser(List<UserDto> dtos) {
         return dtos.stream().map(x -> dtoToUser(x)).collect(Collectors.toList());
     }

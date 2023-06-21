@@ -6,6 +6,7 @@ import ru.practicum.shareit.user.User;
 
 import javax.persistence.*;
 
+@Generated
 @Entity
 @Table(name = "items")
 @Getter

@@ -2,6 +2,7 @@ package ru.practicum.shareit.booking.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import ru.practicum.shareit.Generated;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
@@ -22,6 +23,7 @@ public class BookingMapper {
         return bookingResponseDto;
     }
 
+    @Generated
     public static List<BookingResponseDto> mapToBookingResponseDto(List<Booking> bookings) {
         List<BookingResponseDto> dtos = new ArrayList<>();
         for (Booking booking : bookings) {

@@ -27,23 +27,24 @@ class ItemRepositoryTest {
     @Test
     @DirtiesContext
     void findAllByOwner() {
+        //given
         User owner1 = User.builder().id(1L).name("name").email("name@ya.ru").build();
         User owner2 = User.builder().id(2L).name("name2").email("name2@ya.ru").build();
         Item item = Item.builder().id(1L).name("item").description("item").available(true).owner(owner1).build();
         Item item2 = Item.builder().id(2L).name("item2").description("item2").available(true).owner(owner1).build();
         Item item3 = Item.builder().id(3L).name("item3").description("item3").available(true).owner(owner2).build();
-
         userRepository.save(owner1);
         userRepository.save(owner2);
         itemRepository.save(item);
         itemRepository.save(item2);
         itemRepository.save(item3);
-
+        //when
+        List<Item> itemsOwner2 = itemRepository.findAllByOwner(owner2, Pageable.unpaged());
         List<Item> itemsOwner1 = itemRepository.findAllByOwner(owner1, Pageable.unpaged());
+        //then
         assertEquals(2, itemsOwner1.size());
         assertEquals("item", itemsOwner1.get(0).getName());
         assertEquals("item", itemsOwner1.get(0).getDescription());
-        List<Item> itemsOwner2 = itemRepository.findAllByOwner(owner2, Pageable.unpaged());
         assertEquals(1, itemsOwner2.size());
         assertEquals("item3", itemsOwner2.get(0).getName());
         assertEquals("item3", itemsOwner2.get(0).getDescription());

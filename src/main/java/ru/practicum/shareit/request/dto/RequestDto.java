@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
+@Generated
 @Getter
 @Setter
 @NoArgsConstructor

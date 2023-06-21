@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item;
 
+import ru.practicum.shareit.Generated;
 import ru.practicum.shareit.item.comment.CommentRequest;
 import ru.practicum.shareit.item.comment.CommentResponse;
 import ru.practicum.shareit.item.dto.ItemDto;
@@ -7,6 +8,7 @@ import ru.practicum.shareit.item.dto.ItemShort;
 
 import java.util.List;
 
+@Generated
 public interface ItemService {
     public ItemDto saveItem(Long userId, ItemDto itemDto);
 

@@ -1,9 +1,11 @@
 package ru.practicum.shareit.user;
 
+import ru.practicum.shareit.Generated;
 import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.List;
 
+@Generated
 public interface UserService {
 
     public UserDto saveUser(UserDto userDto);

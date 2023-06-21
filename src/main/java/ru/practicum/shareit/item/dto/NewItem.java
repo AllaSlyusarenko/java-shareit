@@ -1,5 +1,7 @@
 package ru.practicum.shareit.item.dto;
 
-public interface NewItem {
+import lombok.Generated;
 
+@Generated
+public interface NewItem {
 }
