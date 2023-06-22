@@ -3,6 +3,7 @@ package ru.practicum.shareit.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.Generated;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

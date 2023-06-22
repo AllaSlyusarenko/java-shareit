@@ -3,6 +3,7 @@ package ru.practicum.shareit.item.comment;
 import lombok.*;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.Generated;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import ru.practicum.shareit.Generated;
 
 @Generated
 @Getter

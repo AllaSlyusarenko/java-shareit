@@ -1,6 +1,7 @@
 package ru.practicum.shareit.user;
 
 import lombok.*;
+import ru.practicum.shareit.Generated;
 
 import javax.persistence.*;
 
