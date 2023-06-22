@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Table(name = "items")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)

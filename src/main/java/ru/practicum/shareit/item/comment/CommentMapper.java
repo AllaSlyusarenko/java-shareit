@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.comment;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import ru.practicum.shareit.Generated;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
 
@@ -29,6 +30,7 @@ public class CommentMapper {
         return commentResponse;
     }
 
+    @Generated
     public static List<CommentResponse> mapToCommentResponseList(List<Comment> comments) {
         List<CommentResponse> commentResponseList = new ArrayList<>();
         for (Comment comment : comments) {
