@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Table(name = "users")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)

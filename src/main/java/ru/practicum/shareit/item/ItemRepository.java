@@ -3,12 +3,14 @@ package ru.practicum.shareit.item;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import ru.practicum.shareit.item.comment.Comment;
 import ru.practicum.shareit.request.Request;
 import ru.practicum.shareit.user.User;
 
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item> {
     List<Item> findAllByOwner(User user, Pageable pageable);
 
     @Query(" select i from Item i " +

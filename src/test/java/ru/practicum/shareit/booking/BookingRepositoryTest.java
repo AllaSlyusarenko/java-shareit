@@ -29,6 +29,13 @@ class BookingRepositoryTest {
 
     @Test
     @DirtiesContext
+    void testQBooking() {
+        Booking booking = Booking.builder().id(1L).status(Status.WAITING).build();
+        bookingRepository.findAll(QBooking.booking.status.eq(booking.getStatus()));
+    }
+
+    @Test
+    @DirtiesContext
     void findAllByBookerOrderByStartDesc() {
         LocalDateTime start1 = LocalDateTime.of(2024, 3, 15, 22, 15, 15);
         LocalDateTime end1 = start1.plusDays(1);

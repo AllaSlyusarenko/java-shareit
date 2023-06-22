@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.DirtiesContext;
+import ru.practicum.shareit.item.Item;
+import ru.practicum.shareit.item.QItem;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
 
@@ -19,6 +21,13 @@ class RequestRepositoryTest {
     RequestRepository requestRepository;
     @Autowired
     UserRepository userRepository;
+
+    @Test
+    @DirtiesContext
+    void testQRequest() {
+        Request request = Request.builder().id(1L).description("item").build();
+        requestRepository.findAll(QRequest.request.description.eq(request.getDescription()));
+    }
 
     @Test
     @DirtiesContext
