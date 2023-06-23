@@ -62,7 +62,7 @@ public class ItemController {
         return itemService.findItemByNameOrDescription(userId, text, from, size);
     }
 
-
+    @Generated
     @DeleteMapping("/{id}")
     public void deleteItemById(@PathVariable(value = "id") Long id) {
         log.info("Вещь удалена");
