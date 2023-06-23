@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.Generated;
 import ru.practicum.shareit.item.comment.CommentRequest;
 import ru.practicum.shareit.item.comment.CommentResponse;
 import ru.practicum.shareit.item.dto.ItemDto;
@@ -60,6 +61,7 @@ public class ItemController {
         log.info("Поиск вещи по названию или описанию");
         return itemService.findItemByNameOrDescription(userId, text, from, size);
     }
+
 
     @DeleteMapping("/{id}")
     public void deleteItemById(@PathVariable(value = "id") Long id) {

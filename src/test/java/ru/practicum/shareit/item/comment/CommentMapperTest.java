@@ -7,6 +7,7 @@ import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 class CommentMapperTest {
     @Test
@@ -45,5 +46,24 @@ class CommentMapperTest {
         Assertions.assertEquals(commentResponse.getText(), comment.getText());
         Assertions.assertEquals(commentResponse.getAuthorName(), comment.getAuthor().getName());
         Assertions.assertEquals(commentResponse.getCreated(), comment.getCreated());
+    }
+
+    @Test
+    @DirtiesContext
+    void mapToCommentResponseList() {
+        //given
+        LocalDateTime created = LocalDateTime.now();
+        User owner = User.builder().id(1L).name("name1").email("name1@ya.ru").build();
+        User author = User.builder().id(2L).name("name2").email("name2@ya.ru").build();
+        Item item = Item.builder().id(1L).name("item").description("Item1").available(true).owner(owner).build();
+        Comment comment = Comment.builder().id(1L).text("comment").item(item).author(author).created(created).build();
+        //when
+        List<CommentResponse> commentResponse = CommentMapper.mapToCommentResponseList(List.of(comment));
+        //then
+        Assertions.assertNotNull(commentResponse);
+        Assertions.assertEquals(commentResponse.get(0).getId(), comment.getId());
+        Assertions.assertEquals(commentResponse.get(0).getText(), comment.getText());
+        Assertions.assertEquals(commentResponse.get(0).getAuthorName(), comment.getAuthor().getName());
+        Assertions.assertEquals(commentResponse.get(0).getCreated(), comment.getCreated());
     }
 }

@@ -108,6 +108,9 @@
                         <configuration>
                             <outputDirectory>target/generated-sources/java</outputDirectory>
                             <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+                            <options>
+                                <querydsl.generatedAnnotationClass>com.querydsl.core.annotations.Generated</querydsl.generatedAnnotationClass>
+                            </options>
                         </configuration>
                     </execution>
                 </executions>

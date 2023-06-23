@@ -393,4 +393,14 @@ class ItemServiceImplTest {
         verify(commentRepository, times(1)).save(Mockito.any(Comment.class));
         verifyNoMoreInteractions(itemRepository, userRepository, commentRepository, bookingRepository);
     }
+    @Test
+    @DirtiesContext
+    void deleteItemById_shouldDelete_whenDataIsCorrect() {
+        //given
+        //then
+        itemRepository.deleteById(Mockito.anyLong());
+        //when
+        verify(itemRepository, times(1)).deleteById(Mockito.anyLong());
+        verifyNoMoreInteractions(itemRepository, userRepository, commentRepository, bookingRepository);
+    }
 }
