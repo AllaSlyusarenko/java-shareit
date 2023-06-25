@@ -1,8 +1,6 @@
 package ru.practicum.shareit.request;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +16,7 @@ import ru.practicum.shareit.request.dto.RequestResponseGetDto;
 import ru.practicum.shareit.request.dto.RequestResponsePostDto;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
+import ru.practicum.shareit.utility.Pagination;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +56,7 @@ public class RequestServiceImpl implements RequestService {
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pageable pageable = PageRequest.of(from / size, size, Sort.by("created").descending());
+        Pagination pageable = new Pagination(from, size, Sort.by("created").descending());
         List<Request> requests = new ArrayList<>(requestRepository.findAllByRequestorNot(user, pageable));
         List<RequestResponseGetDto> result = new ArrayList<>();
         if (!requests.isEmpty()) {

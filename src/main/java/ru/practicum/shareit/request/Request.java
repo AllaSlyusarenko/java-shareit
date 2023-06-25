@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.Generated;
+import ru.practicum.shareit.utility.Constants;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +28,6 @@ public class Request {
     private User requestor;
 
     @Column(name = "created_date")
-    @JsonFormat(pattern = "yyyy.MM.dd hh:mm:ss")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
     private LocalDateTime created;
 }

@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+
+import org.springframework.validation.annotation.Validated;
 import ru.practicum.shareit.Generated;
 
 @Generated

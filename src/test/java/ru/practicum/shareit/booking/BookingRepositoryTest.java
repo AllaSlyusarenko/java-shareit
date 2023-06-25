@@ -21,11 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BookingRepositoryTest {
 
     @Autowired
-    BookingRepository bookingRepository;
+    private BookingRepository bookingRepository;
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Test
     @DirtiesContext

@@ -1,7 +1,6 @@
 package ru.practicum.shareit.item.dto;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.booking.dto.BookingShort;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.comment.CommentResponse;
@@ -11,9 +10,9 @@ import ru.practicum.shareit.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class ItemMapper {
-    public static ItemDto itemToDto(Item item) {
+    public ItemDto itemToDto(Item item) {
         ItemDto itemDto = new ItemDto();
         itemDto.setId(item.getId());
         itemDto.setName(item.getName());
@@ -23,7 +22,7 @@ public class ItemMapper {
         return itemDto;
     }
 
-    public static Item dtoToItem(User user, ItemDto itemDto, Request request) {
+    public Item dtoToItem(User user, ItemDto itemDto, Request request) {
         Item item = new Item();
         item.setId(itemDto.getId());
         item.setName(itemDto.getName());
@@ -34,7 +33,7 @@ public class ItemMapper {
         return item;
     }
 
-    public static List<ItemDto> itemsToDto(List<Item> items) {
+    public List<ItemDto> itemsToDto(List<Item> items) {
         List<ItemDto> dtos = new ArrayList<>();
         for (Item item : items) {
             dtos.add(itemToDto(item));
@@ -42,7 +41,7 @@ public class ItemMapper {
         return dtos;
     }
 
-    public static ItemShort itemShortDto(Item item, BookingShort lastBooking, BookingShort nextBooking, List<CommentResponse> comments) {
+    public ItemShort itemShortDto(Item item, BookingShort lastBooking, BookingShort nextBooking, List<CommentResponse> comments) {
         ItemShort itemShort = new ItemShort();
         itemShort.setId(item.getId());
         itemShort.setName(item.getName());

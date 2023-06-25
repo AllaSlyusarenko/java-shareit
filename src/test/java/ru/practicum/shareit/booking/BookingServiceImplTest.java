@@ -387,11 +387,10 @@ class BookingServiceImplTest {
         Item item = Item.builder().id(2L).name("item").description("item").available(true).build();
         Integer from = 1;
         Integer size = 2;
-        Pageable pageable = PageRequest.of(from / size, size, Sort.by("end").descending());
         Booking booking = Booking.builder().id(1L).start(start).end(end).item(item).booker(user).status(Status.WAITING).build();
         //when
         when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(user));
-        when(bookingRepository.findAllByBookerOrderByStartDesc(user, pageable)).thenReturn(List.of(booking));
+        when(bookingRepository.findAllByBookerOrderByStartDesc(Mockito.any(User.class), Mockito.any(Pageable.class))).thenReturn(List.of(booking));
         List<BookingResponseDto> bookingResponseDtos = bookingService.allBookingUser(1L, "ALL", from, size);
         //then
         assertFalse(bookingResponseDtos.isEmpty());

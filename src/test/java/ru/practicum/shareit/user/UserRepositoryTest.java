@@ -8,7 +8,7 @@ import org.springframework.test.annotation.DirtiesContext;
 @DataJpaTest
 class UserRepositoryTest {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Test
     @DirtiesContext

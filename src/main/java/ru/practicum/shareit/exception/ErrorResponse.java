@@ -8,5 +8,5 @@ import ru.practicum.shareit.Generated;
 @Getter
 @AllArgsConstructor
 public class ErrorResponse {
-    String error;
+    private String error;
 }

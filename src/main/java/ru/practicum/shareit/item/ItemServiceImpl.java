@@ -1,8 +1,7 @@
 package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.Generated;
@@ -21,6 +20,7 @@ import ru.practicum.shareit.request.Request;
 import ru.practicum.shareit.request.RequestRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
+import ru.practicum.shareit.utility.Pagination;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pageable pageable = PageRequest.of(from / size, size);
+        Pagination pageable = new Pagination(from, size, Sort.unsorted());
         LocalDateTime now = LocalDateTime.now();
         List<ItemShort> itemsOwner = new ArrayList<>();
         List<Item> items = itemRepository.findAllByOwner(user, pageable);
@@ -129,7 +129,7 @@ public class ItemServiceImpl implements ItemService {
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pageable pageable = PageRequest.of(from / size, size);
+        Pagination pageable = new Pagination(from, size, Sort.unsorted());
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         List<Item> items = itemRepository.search(text, pageable);
         return ItemMapper.itemsToDto(items);

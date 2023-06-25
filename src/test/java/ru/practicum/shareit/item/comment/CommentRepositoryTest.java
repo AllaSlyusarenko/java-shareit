@@ -19,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 class CommentRepositoryTest {
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Test
     @DirtiesContext

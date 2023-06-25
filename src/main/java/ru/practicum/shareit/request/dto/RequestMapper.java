@@ -1,7 +1,6 @@
 package ru.practicum.shareit.request.dto;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.request.Request;
 import ru.practicum.shareit.user.User;
@@ -9,9 +8,9 @@ import ru.practicum.shareit.user.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class RequestMapper {
-    public static Request mapToItemRequest(RequestDto requestDto, User user) {
+    public Request mapToItemRequest(RequestDto requestDto, User user) {
         Request request = new Request();
         request.setDescription(requestDto.getDescription());
         request.setRequestor(user);
@@ -19,7 +18,7 @@ public class RequestMapper {
         return request;
     }
 
-    public static RequestResponsePostDto mapToItemResponsePost(Request request) {
+    public RequestResponsePostDto mapToItemResponsePost(Request request) {
         RequestResponsePostDto requestResponsePostDto = new RequestResponsePostDto();
         requestResponsePostDto.setId(request.getId());
         requestResponsePostDto.setDescription(request.getDescription());
@@ -28,7 +27,7 @@ public class RequestMapper {
         return requestResponsePostDto;
     }
 
-    public static RequestResponseGetDto mapToItemResponseGet(Request request, List<ItemDto> items) {
+    public RequestResponseGetDto mapToItemResponseGet(Request request, List<ItemDto> items) {
         RequestResponseGetDto requestResponseGetDto = new RequestResponseGetDto();
         requestResponseGetDto.setId(request.getId());
         requestResponseGetDto.setDescription(request.getDescription());

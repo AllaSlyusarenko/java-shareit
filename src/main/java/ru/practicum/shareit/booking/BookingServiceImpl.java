@@ -1,8 +1,6 @@
 package ru.practicum.shareit.booking;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +13,7 @@ import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
+import ru.practicum.shareit.utility.Pagination;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -81,80 +80,113 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingResponseDto> allBookingUser(Long userId, String state, Integer from, Integer size) {
+    public List<BookingResponseDto> allBookingUser(Long userId, String stateString, Integer from, Integer size) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pageable pageable = PageRequest.of(from / size, size, Sort.by("end").descending());
+        Pagination pageable = new Pagination(from, size, Sort.by("end").descending());
         LocalDateTime nowS = LocalDateTime.now();
         LocalDateTime nowE = LocalDateTime.now();
         List<Booking> result = new ArrayList<>();
+        State state;
+        try {
+            state = State.valueOf(stateString);
+        } catch (IllegalArgumentException e) {
+            throw new ValidationException("Unknown state: " + stateString);
+        }
         switch (state) {
-            case ("ALL"):
+            case ALL:
                 result.addAll(bookingRepository.findAllByBookerOrderByStartDesc(user, pageable));
                 break;
-            case ("CURRENT"):
+            case CURRENT:
                 result.addAll(bookingRepository.findAllByBookerAndStartIsBeforeAndEndIsAfterOrderByStart(user, nowS, nowE, pageable));
                 break;
-            case ("PAST"):
+            case PAST:
                 result.addAll(bookingRepository.findAllByBookerAndEndIsBeforeOrderByStartDesc(user, nowE, pageable));
                 break;
-            case ("FUTURE"):
+            case FUTURE:
                 result.addAll(bookingRepository.findAllByBookerAndStartIsAfterOrderByStartDesc(user, nowS, pageable));
                 break;
-            case ("WAITING"):
+            case WAITING:
                 Status statusW = Status.WAITING;
                 result.addAll(bookingRepository.findAllByBookerAndStatusEqualsOrderByStartDesc(user, statusW, pageable));
                 break;
-            case ("REJECTED"):
+            case REJECTED:
                 Status statusR = Status.REJECTED;
                 result.addAll(bookingRepository.findAllByBookerAndStatusEqualsOrderByStartDesc(user, statusR, pageable));
                 break;
-            default:
-                throw new ValidationException("Unknown state: " + state);
         }
         return BookingMapper.mapToBookingResponseDto(result);
     }
 
     @Override
-    public List<BookingResponseDto> allBookingOwner(Long ownerId, String state, Integer from, Integer size) {
+    public List<BookingResponseDto> allBookingOwner(Long ownerId, String stateString, Integer from, Integer size) {
         User user = userRepository.findById(ownerId).orElseThrow(() -> new NotFoundException("Пользователь с id " + ownerId + " не найден"));
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pageable pageable = PageRequest.of(from / size, size, Sort.by("start").descending());
+        Pagination pageable = new Pagination(from, size, Sort.by("start").descending());
         LocalDateTime nowS = LocalDateTime.now();
         LocalDateTime nowE = LocalDateTime.now();
         List<Booking> result = new ArrayList<>();
+        State state;
+        try {
+            state = State.valueOf(stateString);
+        } catch (IllegalArgumentException e) {
+            throw new ValidationException("Unknown state: " + stateString);
+        }
         switch (state) {
-            case ("ALL"):
+            case ALL:
                 result.addAll(bookingRepository.findAllByItem_OwnerOrderByStartDesc(user, pageable));
                 break;
-            case ("CURRENT"):
+            case CURRENT:
                 result.addAll(bookingRepository.findAllByItem_OwnerAndStartIsBeforeAndEndIsAfterOrderByStart(user, nowS, nowE, pageable));
                 break;
-            case ("PAST"):
+            case PAST:
                 result.addAll(bookingRepository.findAllByItem_OwnerAndEndIsBeforeOrderByStartDesc(user, nowE, pageable));
                 break;
-            case ("FUTURE"):
+            case FUTURE:
                 result.addAll(bookingRepository.findAllByItem_OwnerAndStartIsAfterOrderByStartDesc(user, nowS, pageable));
                 break;
-            case ("WAITING"):
+            case WAITING:
                 Status statusW = Status.WAITING;
                 result.addAll(bookingRepository.findAllByItem_OwnerAndStatusEqualsOrderByStartDesc(user, statusW, pageable));
                 break;
-            case ("REJECTED"):
+            case REJECTED:
                 Status statusR = Status.REJECTED;
                 result.addAll(bookingRepository.findAllByItem_OwnerAndStatusEqualsOrderByStartDesc(user, statusR, pageable));
                 break;
-            default:
-                throw new ValidationException("Unknown state: " + state);
         }
         return BookingMapper.mapToBookingResponseDto(result);
     }
 
     private boolean isValidDate(LocalDateTime start, LocalDateTime end) {
         return start.isAfter(LocalDateTime.now()) && start.isBefore(end);
+    }
+
+    private State StringToState(String state) {
+        State result = null;
+        switch (state) {
+            case ("ALL"):
+                result = State.ALL;
+                break;
+            case ("CURRENT"):
+                result = State.CURRENT;
+                break;
+            case ("PAST"):
+                result = State.PAST;
+                break;
+            case ("FUTURE"):
+                result = State.FUTURE;
+                break;
+            case ("WAITING"):
+                result = State.WAITING;
+                break;
+            case ("REJECTED"):
+                result = State.REJECTED;
+                break;
+        }
+        return result;
     }
 }
