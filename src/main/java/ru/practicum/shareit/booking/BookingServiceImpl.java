@@ -164,29 +164,4 @@ public class BookingServiceImpl implements BookingService {
     private boolean isValidDate(LocalDateTime start, LocalDateTime end) {
         return start.isAfter(LocalDateTime.now()) && start.isBefore(end);
     }
-
-    private State StringToState(String state) {
-        State result = null;
-        switch (state) {
-            case ("ALL"):
-                result = State.ALL;
-                break;
-            case ("CURRENT"):
-                result = State.CURRENT;
-                break;
-            case ("PAST"):
-                result = State.PAST;
-                break;
-            case ("FUTURE"):
-                result = State.FUTURE;
-                break;
-            case ("WAITING"):
-                result = State.WAITING;
-                break;
-            case ("REJECTED"):
-                result = State.REJECTED;
-                break;
-        }
-        return result;
-    }
 }
