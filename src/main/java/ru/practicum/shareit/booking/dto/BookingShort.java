@@ -1,7 +1,9 @@
 package ru.practicum.shareit.booking.dto;
 
 import lombok.*;
+import ru.practicum.shareit.Generated;
 
+@Generated
 @Getter
 @Setter
 @NoArgsConstructor

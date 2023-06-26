@@ -1,9 +1,11 @@
 package ru.practicum.shareit.item.dto;
 
 import lombok.*;
+import ru.practicum.shareit.Generated;
 
 import javax.validation.constraints.*;
 
+@Generated
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,4 +24,6 @@ public class ItemDto {
 
     @NotNull(groups = {NewItem.class})
     private Boolean available;
+
+    private Long requestId;
 }

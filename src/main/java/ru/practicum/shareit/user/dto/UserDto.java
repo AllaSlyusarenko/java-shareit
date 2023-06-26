@@ -1,9 +1,11 @@
 package ru.practicum.shareit.user.dto;
 
 import lombok.*;
+import ru.practicum.shareit.Generated;
 
 import javax.validation.constraints.*;
 
+@Generated
 @Getter
 @Setter
 @NoArgsConstructor

@@ -1,12 +1,16 @@
 package ru.practicum.shareit.booking;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import ru.practicum.shareit.Generated;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.utility.Constants;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Generated
 @Entity
 @Table(name = "bookings")
 @Getter
@@ -20,9 +24,11 @@ public class Booking {
     private Long id;
 
     @Column(name = "start_date")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
     private LocalDateTime start;
 
     @Column(name = "end_date")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
     private LocalDateTime end;
 
     @ManyToOne

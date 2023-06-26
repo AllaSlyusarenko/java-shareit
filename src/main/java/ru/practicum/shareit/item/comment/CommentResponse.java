@@ -1,9 +1,11 @@
 package ru.practicum.shareit.item.comment;
 
 import lombok.*;
+import ru.practicum.shareit.Generated;
 
 import java.time.LocalDateTime;
 
+@Generated
 @Getter
 @Setter
 @NoArgsConstructor

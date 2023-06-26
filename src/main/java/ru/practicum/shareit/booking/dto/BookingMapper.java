@@ -1,7 +1,7 @@
 package ru.practicum.shareit.booking.dto;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
+import ru.practicum.shareit.Generated;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
@@ -9,9 +9,9 @@ import ru.practicum.shareit.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class BookingMapper {
-    public static BookingResponseDto mapToBookingResponseDto(Booking booking) {
+    public BookingResponseDto mapToBookingResponseDto(Booking booking) {
         BookingResponseDto bookingResponseDto = new BookingResponseDto();
         bookingResponseDto.setId(booking.getId());
         bookingResponseDto.setStart(booking.getStart());
@@ -22,7 +22,8 @@ public class BookingMapper {
         return bookingResponseDto;
     }
 
-    public static List<BookingResponseDto> mapToBookingResponseDto(Iterable<Booking> bookings) {
+    @Generated
+    public List<BookingResponseDto> mapToBookingResponseDto(List<Booking> bookings) {
         List<BookingResponseDto> dtos = new ArrayList<>();
         for (Booking booking : bookings) {
             dtos.add(mapToBookingResponseDto(booking));
@@ -30,7 +31,7 @@ public class BookingMapper {
         return dtos;
     }
 
-    public static Booking mapToBooking(BookingRequestDto bookingRequestDto, User user, Item item) {
+    public Booking mapToBooking(BookingRequestDto bookingRequestDto, User user, Item item) {
         Booking booking = new Booking();
         booking.setStart(bookingRequestDto.getStart());
         booking.setEnd(bookingRequestDto.getEnd());
@@ -39,7 +40,7 @@ public class BookingMapper {
         return booking;
     }
 
-    public static BookingShort mapToBookingShort(Booking booking) {
+    public BookingShort mapToBookingShort(Booking booking) {
         BookingShort bookingShort = new BookingShort();
         if (booking == null) {
             return null;
