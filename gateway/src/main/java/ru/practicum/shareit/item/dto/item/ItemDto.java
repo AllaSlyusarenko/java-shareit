@@ -14,17 +14,17 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class ItemDto {
-    @Null
+    @Null(groups = {NewItem.class})
     private Long id;
 
-    @NotBlank
+    @NotBlank(groups = {NewItem.class})
     private String name;
 
     @Size(max = 200)
-    @NotBlank
+    @NotBlank(groups = {NewItem.class})
     private String description;
 
-    @NotNull
+    @NotNull(groups = {NewItem.class})
     private Boolean available;
 
     private Long requestId;
