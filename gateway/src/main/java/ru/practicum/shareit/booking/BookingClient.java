@@ -27,14 +27,14 @@ public class BookingClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> getBookings(Long userId, BookingState state, Integer from, Integer size) {
-        Map<String, Object> parameters = Map.of(
-                "state", state.name(),
-                "from", from,
-                "size", size
-        );
-        return get("?state={state}&from={from}&size={size}", userId, parameters);
-    }
+//    public ResponseEntity<Object> getBookings(Long userId, BookingState state, Integer from, Integer size) {
+//        Map<String, Object> parameters = Map.of(
+//                "state", state.name(),
+//                "from", from,
+//                "size", size
+//        );
+//        return get("?state={state}&from={from}&size={size}", userId, parameters);
+//    }
 
 
     public ResponseEntity<Object> saveBooking(Long userId, BookingRequestDto requestDto) {
@@ -45,8 +45,8 @@ public class BookingClient extends BaseClient {
         return get("/" + bookingId, userId);
     }
 
-    public ResponseEntity<Object> approveBooking(Long userId, Long bookingId, String approved) {
-        return patch("/" + bookingId + "?approved=" + approved, userId); //возможно еще значение parameters
+    public ResponseEntity<Object> approveBooking(Long userId, Long bookingId, Boolean approved) {
+        return patch("/" + bookingId + "?approved=" + approved, userId,null);
     }
 
     public ResponseEntity<Object> allBookingUser(Long userId, BookingState state, Integer from, Integer size) {
@@ -64,6 +64,6 @@ public class BookingClient extends BaseClient {
                 "from", from,
                 "size", size
         );
-        return get("?state={state}&from={from}&size={size}", userId, parameters);
+        return get("/owner?state={state}&from={from}&size={size}", userId, parameters);
     }
 }

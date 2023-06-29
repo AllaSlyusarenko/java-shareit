@@ -24,32 +24,6 @@ public class BookingController {
     private final BookingClient bookingClient;
     private static final String USER_ID = "X-Sharer-User-Id";
 
-//    @GetMapping
-//    public ResponseEntity<Object> getBookings(@RequestHeader("X-Sharer-User-Id") long userId,
-//                                              @RequestParam(name = "state", defaultValue = "all") String stateParam,
-//                                              @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
-//                                              @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
-//        BookingState state = BookingState.from(stateParam)
-//                .orElseThrow(() -> new IllegalArgumentException("Unknown state: " + stateParam));
-//        log.info("Get booking with state {}, userId={}, from={}, size={}", stateParam, userId, from, size);
-//        return bookingClient.getBookings(userId, state, from, size);
-//    }
-
-//    @PostMapping
-//    public ResponseEntity<Object> bookItem(@RequestHeader("X-Sharer-User-Id") long userId,
-//                                           @RequestBody @Valid BookingRequestDto requestDto) {
-//        log.info("Creating booking {}, userId={}", requestDto, userId);
-//        return bookingClient.bookItem(userId, requestDto);
-//    }
-
-//    @GetMapping("/{bookingId}")
-//    public ResponseEntity<Object> getBooking(@RequestHeader("X-Sharer-User-Id") long userId,
-//                                             @PathVariable Long bookingId) {
-//        log.info("Get booking {}, userId={}", bookingId, userId);
-//        return bookingClient.getBooking(userId, bookingId);
-//    }
-
-
     @PostMapping
     public ResponseEntity<Object> saveBooking(@RequestHeader(USER_ID) @Positive Long userId,
                                               @Valid @RequestBody BookingRequestDto bookingRequestDto) {
@@ -60,7 +34,7 @@ public class BookingController {
     @PatchMapping("/{bookingId}")
     public ResponseEntity<Object> approveBooking(@RequestHeader(USER_ID) @Positive Long userId,
                                                  @PathVariable @Positive Long bookingId,
-                                                 @RequestParam @NotBlank String approved) {
+                                                 @RequestParam @NotBlank Boolean approved) {
         log.info("Подтверждение или отклонение запроса на бронирование");
         return bookingClient.approveBooking(userId, bookingId, approved);
     }
