@@ -11,7 +11,6 @@ import ru.practicum.shareit.booking.dto.BookingRequestDto;
 import ru.practicum.shareit.booking.dto.BookingState;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -34,7 +33,7 @@ public class BookingController {
     @PatchMapping("/{bookingId}")
     public ResponseEntity<Object> approveBooking(@RequestHeader(USER_ID) @Positive Long userId,
                                                  @PathVariable @Positive Long bookingId,
-                                                 @RequestParam @NotBlank Boolean approved) {
+                                                 @RequestParam("approved") Boolean approved) {
         log.info("Подтверждение или отклонение запроса на бронирование");
         return bookingClient.approveBooking(userId, bookingId, approved);
     }
@@ -48,7 +47,7 @@ public class BookingController {
 
     @GetMapping
     public ResponseEntity<Object> allBookingUser(@RequestHeader(USER_ID) @Positive Long userId,
-                                                 @RequestParam(defaultValue = "ALL") BookingState state,
+                                                 @RequestParam(defaultValue = "ALL") String state,
                                                  @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                                  @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
         log.info("Получение списка всех бронирований пользователя");
