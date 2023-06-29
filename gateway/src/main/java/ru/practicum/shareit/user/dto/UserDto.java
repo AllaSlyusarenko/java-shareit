@@ -13,13 +13,13 @@ import javax.validation.constraints.Null;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class UserDto {
-    @Null
+    @Null(groups = {NewUser.class})
     private Long id;
 
-    @NotBlank
+    @NotBlank(groups = {NewUser.class})
     private String name;
 
-    @NotBlank
-    @Email
+    @NotBlank(groups = {NewUser.class})
+    @Email(groups = {NewUser.class, UpdateUser.class})
     private String email;
 }

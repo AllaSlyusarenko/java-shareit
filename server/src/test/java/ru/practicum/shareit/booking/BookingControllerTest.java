@@ -98,7 +98,7 @@ class BookingControllerTest {
         BookingResponseDto bookingResponseDto = BookingResponseDto.builder().id(1L).start(start).end(end).item(new Item())
                 .booker(booker).status(status).build();
         //when
-        when(bookingService.approveBooking(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString()))
+        when(bookingService.approveBooking(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean()))
                 .thenReturn(bookingResponseDto);
         //then
         mvc.perform(patch("/bookings/1")
@@ -114,7 +114,7 @@ class BookingControllerTest {
                 .andExpect(jsonPath("$.item").isNotEmpty())
                 .andExpect(jsonPath("$.booker.id").value(bookingResponseDto.getBooker().getId()))
                 .andExpect(jsonPath("$.status").value(bookingResponseDto.getStatus().name()));
-        verify(bookingService, times(1)).approveBooking(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString());
+        verify(bookingService, times(1)).approveBooking(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean());
     }
 
     @Test
@@ -128,7 +128,7 @@ class BookingControllerTest {
         BookingResponseDto bookingResponseDto = BookingResponseDto.builder().id(1L).start(start).end(end).item(new Item())
                 .booker(booker).status(status).build();
         //when
-        when(bookingService.approveBooking(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString()))
+        when(bookingService.approveBooking(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean()))
                 .thenReturn(bookingResponseDto);
         //then
         mvc.perform(patch("/bookings/1")
@@ -137,7 +137,7 @@ class BookingControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .param("approved", "true")
         ).andExpect(status().isBadRequest());
-        verify(bookingService, never()).approveBooking(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString());
+        verify(bookingService, never()).approveBooking(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean());
     }
 
     @Test

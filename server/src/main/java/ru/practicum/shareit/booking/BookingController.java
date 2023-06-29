@@ -29,7 +29,7 @@ public class BookingController {
     @PatchMapping("/{bookingId}")
     public BookingResponseDto approveBooking(@RequestHeader(USER_ID) Long userId,
                                              @PathVariable Long bookingId,
-                                             @RequestParam String approved) {
+                                             @RequestParam Boolean approved) {
         log.info("Подтверждение или отклонение запроса на бронирование");
         return bookingService.approveBooking(userId, bookingId, approved);
     }

@@ -65,7 +65,7 @@ public class BookingServiceIntegrationTest {
         itemRepository.save(item);
         BookingResponseDto bookingResponseDtoIn = bookingService.saveBooking(booker.getId(), bookingRequestDto);
         //when
-        BookingResponseDto bookingResponseDto = bookingService.approveBooking(user.getId(), bookingResponseDtoIn.getId(), "true");
+        BookingResponseDto bookingResponseDto = bookingService.approveBooking(user.getId(), bookingResponseDtoIn.getId(), true);
         //then
         assertNotNull(bookingResponseDto.getId());
         assertNotNull(bookingResponseDto.getStart());

@@ -53,7 +53,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public BookingResponseDto approveBooking(Long userId, Long bookingId, String approved) {
+    public BookingResponseDto approveBooking(Long userId, Long bookingId, Boolean approved) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Запрос с id " + bookingId + " не найден"));
         if (!booking.getItem().getOwner().getId().equals(userId)) {
@@ -62,9 +62,9 @@ public class BookingServiceImpl implements BookingService {
         if (!booking.getStatus().equals(Status.WAITING)) {
             throw new ValidationException("Вещь должна быть в статусе - ожидания подтверждения");
         }
-        if (approved.equals("true")) {
+        if (approved) {
             booking.setStatus(Status.APPROVED);
-        } else if (approved.equals("false")) {
+        } else if (!approved) {
             booking.setStatus(Status.REJECTED);
         } else {
             throw new ValidationException("Недопустимое значение, должно быть или true,  или false");
