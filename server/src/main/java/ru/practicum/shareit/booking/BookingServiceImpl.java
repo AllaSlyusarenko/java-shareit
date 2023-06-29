@@ -64,10 +64,8 @@ public class BookingServiceImpl implements BookingService {
         }
         if (approved) {
             booking.setStatus(Status.APPROVED);
-        } else if (!approved) {
-            booking.setStatus(Status.REJECTED);
         } else {
-            throw new ValidationException("Недопустимое значение, должно быть или true,  или false");
+            booking.setStatus(Status.REJECTED);
         }
         Booking bookingSave = bookingRepository.save(booking);
         return BookingMapper.mapToBookingResponseDto(bookingSave);
