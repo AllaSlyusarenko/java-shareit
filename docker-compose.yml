@@ -24,7 +24,9 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shareit
 
   db:
-    image: postgres:13
+    image: postgres:13.7-alpine
+    volumes:
+      - /var/lib/postgresql/data/
     container_name: shareit-db
     ports:
       - "6541:5432"

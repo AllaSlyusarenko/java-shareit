@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.NewUser;
 import ru.practicum.shareit.user.dto.UserDto;
 
-import javax.validation.constraints.Positive;
+
 import java.util.List;
 
 
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable(value = "id") @Positive Long id) {
+    public UserDto getUserById(@PathVariable(value = "id") Long id) {
         log.info("Просмотр пользователя по идентификатору");
         return userService.findUserById(id);
     }
@@ -40,14 +40,14 @@ public class UserController {
     }
 
     @PatchMapping("/{idUser}")
-    public UserDto updateUser(@PathVariable(value = "idUser") @Positive Long id,
+    public UserDto updateUser(@PathVariable(value = "idUser") Long id,
                               @RequestBody UserDto userDto) {
         log.info("Обновление пользователя");
         return userService.updateUser(id, userDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable(value = "id") @Positive Long id) {
+    public void deleteUserById(@PathVariable(value = "id") Long id) {
         log.info("Пользователь удален");
         userService.deleteUserById(id);
     }
