@@ -32,32 +32,32 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Object> getItemById(@RequestHeader(USER_ID) @Positive Long userId,
-                                 @PathVariable(value = "itemId") @Positive Long id) {
+                                              @PathVariable(value = "itemId") @Positive Long id) {
         log.info("Просмотр вещи по идентификатору");
         return itemClient.findItemById(userId, id);
     }
 
     @GetMapping
     public ResponseEntity<Object> getAllUserItems(@RequestHeader(USER_ID) @Positive Long userId,
-                                           @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
-                                           @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
+                                                  @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
+                                                  @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
         log.info("Просмотр владельцем всех своих вещей");
         return itemClient.findAllUserItems(userId, from, size);
     }
 
     @PatchMapping("/{itemId}")
     public ResponseEntity<Object> updateItem(@RequestHeader(USER_ID) @Positive Long userId,
-                              @PathVariable(value = "itemId") @Positive Long id,
-                              @RequestBody ItemDto itemDto) {
+                                             @PathVariable(value = "itemId") @Positive Long id,
+                                             @RequestBody ItemDto itemDto) {
         log.info("Обновление вещи");
         return itemClient.updateItem(userId, id, itemDto);
     }
 
     @GetMapping("/search")
     public ResponseEntity<Object> getItemByNameOrDescription(@RequestHeader(USER_ID) @Positive Long userId,
-                                                    @RequestParam("text") String text,
-                                                    @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
-                                                    @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
+                                                             @RequestParam("text") String text,
+                                                             @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
+                                                             @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
         log.info("Поиск вещи по названию или описанию");
         return itemClient.findItemByNameOrDescription(userId, text, from, size);
     }
@@ -70,8 +70,8 @@ public class ItemController {
 
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<Object> saveComment(@RequestHeader(USER_ID) @Positive Long userId,
-                                       @PathVariable @Positive Long itemId,
-                                       @Valid @RequestBody CommentRequest commentRequest) {
+                                              @PathVariable @Positive Long itemId,
+                                              @Valid @RequestBody CommentRequest commentRequest) {
         log.info("Создание нового комментария");
         return itemClient.saveComment(userId, itemId, commentRequest);
     }

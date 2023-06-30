@@ -8,7 +8,6 @@ import ru.practicum.shareit.user.User;
 import java.util.List;
 
 public interface RequestRepository extends JpaRepository<Request, Long>, QuerydslPredicateExecutor<Request> {
-
     List<Request> findAllByRequestorOrderByCreatedDesc(User user);
 
     List<Request> findAllByRequestorNot(User user, Pageable pageable);

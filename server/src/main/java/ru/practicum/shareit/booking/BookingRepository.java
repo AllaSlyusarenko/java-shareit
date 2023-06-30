@@ -36,6 +36,4 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, Queryds
     Booking findFirstByItemAndStartIsAfterOrderByStart(Item item, LocalDateTime now);
 
     Booking findFirstByBookerAndItemAndEndIsBeforeOrderByEndDesc(User user, Item item, LocalDateTime now);
-
-    Booking findFirstByBookerAndItemAndEndIsBefore(User user, Item item, LocalDateTime now);
 }

@@ -79,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pagination pageable = new Pagination(from, size, Sort.by(Sort.Direction.ASC,"id"));
+        Pagination pageable = new Pagination(from, size, Sort.by(Sort.Direction.ASC, "id"));
         LocalDateTime now = LocalDateTime.now();
         List<ItemShort> itemsOwner = new ArrayList<>();
         List<Item> items = itemRepository.findAllByOwner(user, pageable);

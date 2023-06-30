@@ -72,34 +72,6 @@
             <artifactId>querydsl-jpa</artifactId>
             <version>5.0.0</version>
         </dependency>
-
-
-
-
-<!--        -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-<!--        <dependency>-->
-<!--            <groupId>org.modelmapper</groupId>-->
-<!--            <artifactId>modelmapper</artifactId>-->
-<!--            <version>3.1.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>junit</groupId>-->
-<!--            <artifactId>junit</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.querydsl</groupId>-->
-<!--            <artifactId>querydsl-apt</artifactId>-->
-<!--            <version>5.0.0</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.hamcrest</groupId>-->
-<!--            <artifactId>hamcrest</artifactId>-->
-<!--            <version>2.2</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -112,22 +84,9 @@
             <version>4.0.0</version>
             <scope>test</scope>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-jdbc</artifactId>-->
-<!--        </dependency>-->
-
-
     </dependencies>
 
     <build>
-<!--        <resources>-->
-<!--            <resource>-->
-<!--                <directory>src/main/resources</directory>-->
-<!--                <filtering>true</filtering>-->
-<!--            </resource>-->
-<!--        </resources>-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

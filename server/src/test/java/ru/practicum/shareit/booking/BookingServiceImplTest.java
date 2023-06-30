@@ -230,26 +230,6 @@ class BookingServiceImplTest {
         assertThat(exception.getMessage(), containsString("Вещь должна быть в статусе - ожидания подтверждения"));
     }
 
-//    @Test
-//    @DirtiesContext
-//    void approveBooking_shouldNotApproveBooking_whenStatuIsUnknown() {
-//        //given
-//        LocalDateTime start = LocalDateTime.of(2024, 3, 15, 22, 15, 15);
-//        LocalDateTime end = start.plusDays(1);
-//        User user = User.builder().id(1L).name("name").email("name@ya.ru").build();
-//        User booker = User.builder().id(2L).name("name2").email("name2@ya.ru").build();
-//        Item item = Item.builder().id(1L).name("item").description("item").available(true).owner(user).build();
-//        Booking booking = Booking.builder().id(1L).start(start).end(end).item(item).booker(booker).status(Status.WAITING).build();
-//        //when
-//        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-//        when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(booking));
-//        //then
-//        ValidationException exception = assertThrows(ValidationException.class,
-//                () -> bookingService.approveBooking(1L, 1L, qwerty));
-//        verify(bookingRepository, never()).save(Mockito.any(Booking.class));
-//        assertThat(exception.getMessage(), containsString("Недопустимое значение, должно быть или true,  или false"));
-//    }
-
     @Test
     @DirtiesContext
     void approveBooking_shouldNotApproveBooking_whenDataIsOkTrue() {
