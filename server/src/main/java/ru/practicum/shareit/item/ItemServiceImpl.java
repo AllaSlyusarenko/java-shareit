@@ -79,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
         if (from < 0 || size <= 0) {
             throw new ValidationException("from должно быть неотрицательное и size положительное");
         }
-        Pagination pageable = new Pagination(from, size, Sort.unsorted());
+        Pagination pageable = new Pagination(from, size, Sort.by(Sort.Direction.ASC,"id"));
         LocalDateTime now = LocalDateTime.now();
         List<ItemShort> itemsOwner = new ArrayList<>();
         List<Item> items = itemRepository.findAllByOwner(user, pageable);
@@ -147,7 +147,7 @@ public class ItemServiceImpl implements ItemService {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id " + id + " не найдена"));
         Booking booking =
-                bookingRepository.findFirstByBookerAndItemAndEndIsBeforeOrderByEndDesc(user, item, now);
+                bookingRepository.findFirstByBookerAndItemAndEndIsBefore(user, item, now);
         if (booking == null) {
             throw new ValidationException("Пользователь c id " + userId + " не использовал вещь c id " + id);
         }

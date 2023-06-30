@@ -11,6 +11,5 @@ import ru.practicum.shareit.Generated;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class CommentRequest {
-
     private String text;
 }

@@ -3,6 +3,7 @@ package ru.practicum.shareit.item.dto.comment;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Generated
 @Getter
@@ -12,5 +13,6 @@ import javax.validation.constraints.NotBlank;
 @Builder(toBuilder = true)
 public class CommentRequest {
     @NotBlank
+    @NotNull
     private String text;
 }

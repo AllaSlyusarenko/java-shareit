@@ -70,9 +70,9 @@ public class ItemController {
 
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<Object> saveComment(@RequestHeader(USER_ID) @Positive Long userId,
-                                       @PathVariable(value = "itemId") @Positive Long id,
+                                       @PathVariable(value = "itemId") @Positive Long itemId,
                                        @Valid @RequestBody CommentRequest commentRequest) {
         log.info("Создание новой вещи");
-        return itemClient.saveComment(userId, id, commentRequest);
+        return itemClient.saveComment(userId, itemId, commentRequest);
     }
 }

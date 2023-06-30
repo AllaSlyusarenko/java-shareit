@@ -44,7 +44,7 @@ public class ItemClient extends BaseClient {
     }
 
     public ResponseEntity<Object> updateItem(Long userId, Long id, ItemDto itemDto) {
-        return patch("/" + id, userId, null, itemDto);
+        return patch("/" + id, userId, itemDto);
     }
 
     public ResponseEntity<Object> findItemByNameOrDescription(Long userId, String text, Integer from, Integer size) {
@@ -60,7 +60,7 @@ public class ItemClient extends BaseClient {
         return delete("/" + id, id);
     }
 
-    public ResponseEntity<Object> saveComment(Long userId, Long id, CommentRequest commentRequest) {
-        return post("/" + id + "/comment", userId, null, commentRequest);
+    public ResponseEntity<Object> saveComment(Long userId, Long itemId, CommentRequest commentRequest) {
+        return post("/" + itemId + "/comment", userId, commentRequest);
     }
 }
