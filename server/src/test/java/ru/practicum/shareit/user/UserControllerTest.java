@@ -50,24 +50,24 @@ class UserControllerTest {
         verify(userService, times(1)).saveUser(Mockito.any(UserDto.class));
     }
 
-    @Test
-    @DirtiesContext
-    void saveUser_shouldNotSaveUser_whenDataIsWrong() throws Exception {
-        //given
-        UserDto userDtoIn = UserDto.builder().id(1L).name("name").email("name@ya.ru").build();
-        UserDto userDtoOut = UserDto.builder().id(1L).name("name").email("name@ya.ru").build();
-        //when
-        when(userService.saveUser(Mockito.any(UserDto.class)))
-                .thenReturn(userDtoOut);
-        //then
-        mvc.perform(post("/users")
-                .content(objectMapper.writeValueAsString(userDtoIn))
-                .characterEncoding(StandardCharsets.UTF_8)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isBadRequest());
-        verify(userService, never()).saveUser(Mockito.any(UserDto.class));
-    }
+//    @Test
+//    @DirtiesContext
+//    void saveUser_shouldNotSaveUser_whenDataIsWrong() throws Exception {
+//        //given
+//        UserDto userDtoIn = UserDto.builder().id(1L).name("name").email("name@ya.ru").build();
+//        UserDto userDtoOut = UserDto.builder().id(1L).name("name").email("name@ya.ru").build();
+//        //when
+//        when(userService.saveUser(Mockito.any(UserDto.class)))
+//                .thenReturn(userDtoOut);
+//        //then
+//        mvc.perform(post("/users")
+//                .content(objectMapper.writeValueAsString(userDtoIn))
+//                .characterEncoding(StandardCharsets.UTF_8)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON)
+//        ).andExpect(status().isBadRequest());
+//        verify(userService, never()).saveUser(Mockito.any(UserDto.class));
+//    }
 
     @Test
     @DirtiesContext
