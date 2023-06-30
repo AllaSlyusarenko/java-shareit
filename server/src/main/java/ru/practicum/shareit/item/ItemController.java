@@ -2,9 +2,7 @@ package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.Generated;
 import ru.practicum.shareit.item.comment.CommentRequest;
 import ru.practicum.shareit.item.comment.CommentResponse;
 import ru.practicum.shareit.item.dto.ItemDto;
@@ -21,7 +19,6 @@ public class ItemController {
     private static final String USER_ID = "X-Sharer-User-Id";
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ItemDto saveItem(@RequestHeader(USER_ID) Long userId,
                             @RequestBody ItemDto itemDto) {
         log.info("Создание новой вещи");
@@ -60,7 +57,6 @@ public class ItemController {
         return itemService.findItemByNameOrDescription(userId, text, from, size);
     }
 
-    @Generated
     @DeleteMapping("/{id}")
     public void deleteItemById(@PathVariable(value = "id") Long id) {
         log.info("Вещь удалена");
@@ -69,9 +65,9 @@ public class ItemController {
 
     @PostMapping("/{itemId}/comment")
     public CommentResponse saveComment(@RequestHeader(USER_ID) Long userId,
-                                       @PathVariable(value = "itemId") Long id,
+                                       @PathVariable Long itemId,
                                        @RequestBody CommentRequest commentRequest) {
-        log.info("Создание новой вещи");
-        return itemService.saveComment(userId, id, commentRequest);
+        log.info("Создание нового комментария");
+        return itemService.saveComment(userId, itemId, commentRequest);
     }
 }

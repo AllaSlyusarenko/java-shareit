@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
@@ -37,7 +37,6 @@ public class ItemServiceImpl implements ItemService {
     private final RequestRepository requestRepository;
 
     @Override
-    @Transactional
     public ItemDto saveItem(Long userId, ItemDto itemDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         Request request = null;
@@ -50,7 +49,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ItemShort findItemById(Long userId, Long id) {
         LocalDateTime now = LocalDateTime.now();
         Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id " + id + " не найдена"));
@@ -74,6 +73,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ItemShort> findAllUserItems(Long userId, Integer from, Integer size) { // владелец вещи
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         if (from < 0 || size <= 0) {
@@ -103,7 +103,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
     public ItemDto updateItem(Long userId, Long id, ItemDto itemDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id " + id + " не найдена"));
@@ -122,6 +121,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ItemDto> findItemByNameOrDescription(Long userId, String text, Integer from, Integer size) {
         if (text.isBlank()) {
             return ItemMapper.itemsToDto(new ArrayList<>());
@@ -147,7 +147,7 @@ public class ItemServiceImpl implements ItemService {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещь с id " + id + " не найдена"));
         Booking booking =
-                bookingRepository.findFirstByBookerAndItemAndEndIsBefore(user, item, now);
+                bookingRepository.findFirstByBookerAndItemAndEndIsBeforeOrderByEndDesc(user, item, now);
         if (booking == null) {
             throw new ValidationException("Пользователь c id " + userId + " не использовал вещь c id " + id);
         }

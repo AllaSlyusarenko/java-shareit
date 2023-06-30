@@ -43,7 +43,7 @@ class UserControllerTest {
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                ).andExpect(status().isCreated())
+                ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(userDtoOut.getId()), Long.class))
                 .andExpect(jsonPath("$.name").value(userDtoOut.getName()))
                 .andExpect(jsonPath("$.email").value(userDtoOut.getEmail()));

@@ -13,6 +13,7 @@ import java.util.List;
 public class CommentMapper {
     public Comment mapToComment(CommentRequest commentRequest, User user, Item item, LocalDateTime now) {
         Comment comment = new Comment();
+        comment.setId(0L);
         comment.setText(commentRequest.getText());
         comment.setItem(item);
         comment.setAuthor(user);

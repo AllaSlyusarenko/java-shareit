@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class RequestServiceImpl implements RequestService {
     private final UserRepository userRepository;
@@ -38,6 +38,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RequestResponseGetDto> findRequestByUserId(Long userId) { // свои запросы
         User userRequestor = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         List<Request> requests = requestRepository.findAllByRequestorOrderByCreatedDesc(userRequestor);
@@ -51,6 +52,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RequestResponseGetDto> findRequestFromOtherUsers(Long userId, Integer from, Integer size) { //запросы других пользователей
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         if (from < 0 || size <= 0) {
@@ -70,6 +72,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public RequestResponseGetDto findRequestById(Long userId, Long id) { // любой пользователь - ItemDto
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
         Request request = requestRepository.findById(id).orElseThrow(() -> new NotFoundException("Запрос с id " + id + " не найден"));

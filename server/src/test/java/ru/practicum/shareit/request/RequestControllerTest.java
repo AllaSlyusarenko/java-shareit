@@ -51,7 +51,7 @@ class RequestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-Sharer-User-Id", "1")
-                ).andExpect(status().isCreated())
+                ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(requestResponsePostDto.getId()), Long.class))
                 .andExpect(jsonPath("$.description").value(requestResponsePostDto.getDescription()))
                 .andExpect(jsonPath("$.requestor").isNotEmpty())

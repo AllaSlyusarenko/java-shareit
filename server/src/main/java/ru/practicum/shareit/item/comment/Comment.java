@@ -3,13 +3,11 @@ package ru.practicum.shareit.item.comment;
 import lombok.*;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
-import ru.practicum.shareit.Generated;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
-@Generated
 @Entity
 @Table(name = "comments")
 @Getter
@@ -20,7 +18,6 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @NotBlank

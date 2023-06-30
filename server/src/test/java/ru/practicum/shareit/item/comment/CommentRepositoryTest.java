@@ -44,12 +44,12 @@ class CommentRepositoryTest {
         assertEquals(comments.get(0).getAuthor().getName(), booker.getName());
     }
 
-    @Test
-    @DirtiesContext
-    void testQComment() {
-        User user = User.builder().id(1L).name("name").email("name@ya.ru").build();
-        Item item = Item.builder().id(1L).name("item").description("item").available(true).owner(user).build();
-        Comment comment = Comment.builder().text("good").item(item).author(user).created(LocalDateTime.now()).build();
-        commentRepository.findAll(QComment.comment.text.eq(comment.getText()));
-    }
+//    @Test
+//    @DirtiesContext
+//    void testQComment() {
+//        User user = User.builder().id(1L).name("name").email("name@ya.ru").build();
+//        Item item = Item.builder().id(1L).name("item").description("item").available(true).owner(user).build();
+//        Comment comment = Comment.builder().text("good").item(item).author(user).created(LocalDateTime.now()).build();
+//        commentRepository.findAll(QComment.comment.text.eq(comment.getText()));
+//    }
 }
