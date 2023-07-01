@@ -4,5 +4,4 @@ public class UnknownStateException extends RuntimeException {
     public UnknownStateException(String unknownState) {
         super("Unknown state: " + unknownState);
     }
-
 }

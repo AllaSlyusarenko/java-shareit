@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.comment.CommentRequest;
 import ru.practicum.shareit.item.dto.item.ItemDto;
-import ru.practicum.shareit.item.dto.item.NewItem;
+import ru.practicum.shareit.marker.Create;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -25,7 +25,7 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<Object> saveItem(@RequestHeader(USER_ID) @Positive Long userId,
-                                           @Validated(NewItem.class) @RequestBody ItemDto itemDto) {
+                                           @Validated(Create.class) @RequestBody ItemDto itemDto) {
         log.info("Создание новой вещи");
         return itemClient.saveItem(userId, itemDto);
     }

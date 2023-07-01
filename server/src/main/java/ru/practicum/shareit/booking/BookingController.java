@@ -9,7 +9,6 @@ import ru.practicum.shareit.booking.dto.BookingResponseDto;
 
 import java.util.List;
 
-
 @Slf4j
 @RestController
 @RequestMapping(path = "/bookings")
