@@ -1,9 +1,9 @@
 package ru.practicum.shareit.booking.dto;
 
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
 import ru.practicum.shareit.exception.UnknownStateException;
 
+@AllArgsConstructor
 public enum BookingState {
     // Все
     ALL,
@@ -16,17 +16,21 @@ public enum BookingState {
     // Отклоненные
     REJECTED,
     // Ожидающие подтверждения
-    WAITING;
+    WAITING,
+    UNSUPPORTED_STATUS;
 
-    @Component
-    public class StringToBookingState implements Converter<String, BookingState> {
-        @Override
-        public BookingState convert(String state) {
-            try {
-                return BookingState.valueOf(state.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                throw new UnknownStateException(state);
+    public static BookingState stringToState(String state) {
+        BookingState resultState = null;
+        if (state != null) {
+            for (BookingState bookingState : BookingState.values()) {
+                if (state.equalsIgnoreCase(bookingState.name())) {
+                    if (bookingState.equals(UNSUPPORTED_STATUS)) {
+                        throw new UnknownStateException(state);
+                    }
+                    resultState = bookingState;
+                }
             }
         }
+        return resultState;
     }
 }
