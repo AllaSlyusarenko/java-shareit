@@ -21,14 +21,14 @@ public class ItemController {
     @PostMapping
     public ItemDto saveItem(@RequestHeader(USER_ID) Long userId,
                             @RequestBody ItemDto itemDto) {
-        log.info("Создание новой вещи");
+        log.info("Создание новой вещи пользователем с id {}", userId);
         return itemService.saveItem(userId, itemDto);
     }
 
     @GetMapping("/{itemId}")
     public ItemShort getItemById(@RequestHeader(USER_ID) Long userId,
                                  @PathVariable(value = "itemId") Long id) {
-        log.info("Просмотр вещи по идентификатору");
+        log.info("Просмотр вещи по идентификатору с id {}", id);
         return itemService.findItemById(userId, id);
     }
 
@@ -36,7 +36,7 @@ public class ItemController {
     public List<ItemShort> getAllUserItems(@RequestHeader(USER_ID) Long userId,
                                            @RequestParam(value = "from", defaultValue = "0") Integer from,
                                            @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        log.info("Просмотр владельцем всех своих вещей");
+        log.info("Просмотр владельцем c id {} всех своих вещей", userId);
         return itemService.findAllUserItems(userId, from, size);
     }
 
@@ -44,7 +44,7 @@ public class ItemController {
     public ItemDto updateItem(@RequestHeader(USER_ID) Long userId,
                               @PathVariable(value = "itemId") Long id,
                               @RequestBody ItemDto itemDto) {
-        log.info("Обновление вещи");
+        log.info("Обновление вещи c id {}", id);
         return itemService.updateItem(userId, id, itemDto);
     }
 
@@ -53,13 +53,13 @@ public class ItemController {
                                                     @RequestParam("text") String text,
                                                     @RequestParam(value = "from", defaultValue = "0") Integer from,
                                                     @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        log.info("Поиск вещи по названию или описанию");
+        log.info("Поиск вещи по названию или описанию {}", text);
         return itemService.findItemByNameOrDescription(userId, text, from, size);
     }
 
     @DeleteMapping("/{id}")
     public void deleteItemById(@PathVariable(value = "id") Long id) {
-        log.info("Вещь удалена");
+        log.info("Вещь удалена c id {}", id);
         itemService.deleteItemById(id);
     }
 
@@ -67,7 +67,7 @@ public class ItemController {
     public CommentResponse saveComment(@RequestHeader(USER_ID) Long userId,
                                        @PathVariable Long itemId,
                                        @RequestBody CommentRequest commentRequest) {
-        log.info("Создание нового комментария");
+        log.info("Создание нового комментария к вещи c id {}", itemId);
         return itemService.saveComment(userId, itemId, commentRequest);
     }
 }

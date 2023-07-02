@@ -26,14 +26,14 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<Object> saveItem(@RequestHeader(USER_ID) @Positive Long userId,
                                            @Validated(Create.class) @RequestBody ItemDto itemDto) {
-        log.info("Создание новой вещи");
+        log.info("Создание новой вещи пользователем с id {}", userId);
         return itemClient.saveItem(userId, itemDto);
     }
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Object> getItemById(@RequestHeader(USER_ID) @Positive Long userId,
                                               @PathVariable(value = "itemId") @Positive Long id) {
-        log.info("Просмотр вещи по идентификатору");
+        log.info("Просмотр вещи по идентификатору с id {}", id);
         return itemClient.findItemById(userId, id);
     }
 
@@ -41,7 +41,7 @@ public class ItemController {
     public ResponseEntity<Object> getAllUserItems(@RequestHeader(USER_ID) @Positive Long userId,
                                                   @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                                   @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
-        log.info("Просмотр владельцем всех своих вещей");
+        log.info("Просмотр владельцем c id {} всех своих вещей", userId);
         return itemClient.findAllUserItems(userId, from, size);
     }
 
@@ -49,7 +49,7 @@ public class ItemController {
     public ResponseEntity<Object> updateItem(@RequestHeader(USER_ID) @Positive Long userId,
                                              @PathVariable(value = "itemId") @Positive Long id,
                                              @RequestBody ItemDto itemDto) {
-        log.info("Обновление вещи");
+        log.info("Обновление вещи c id {}", id);
         return itemClient.updateItem(userId, id, itemDto);
     }
 
@@ -58,13 +58,13 @@ public class ItemController {
                                                              @RequestParam("text") String text,
                                                              @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                                              @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
-        log.info("Поиск вещи по названию или описанию");
+        log.info("Поиск вещи по названию или описанию {}", text);
         return itemClient.findItemByNameOrDescription(userId, text, from, size);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteItemById(@PathVariable(value = "id") @Positive Long id) {
-        log.info("Вещь удалена");
+        log.info("Вещь удалена c id {}", id);
         return itemClient.deleteItemById(id);
     }
 
@@ -72,7 +72,7 @@ public class ItemController {
     public ResponseEntity<Object> saveComment(@RequestHeader(USER_ID) @Positive Long userId,
                                               @PathVariable @Positive Long itemId,
                                               @Valid @RequestBody CommentRequest commentRequest) {
-        log.info("Создание нового комментария");
+        log.info("Создание нового комментария к вещи c id {}", itemId);
         return itemClient.saveComment(userId, itemId, commentRequest);
     }
 }

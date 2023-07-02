@@ -16,13 +16,13 @@ public class UserController {
 
     @PostMapping
     public UserDto saveUser(@RequestBody UserDto userDto) {
-        log.info("Создание нового пользователя");
+        log.info("Создание нового пользователя: {}", userDto);
         return userService.saveUser(userDto);
     }
 
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable(value = "id") Long id) {
-        log.info("Просмотр пользователя по идентификатору");
+        log.info("Просмотр пользователя по идентификатору: {}", id);
         return userService.findUserById(id);
     }
 
@@ -35,13 +35,13 @@ public class UserController {
     @PatchMapping("/{idUser}")
     public UserDto updateUser(@PathVariable(value = "idUser") Long id,
                               @RequestBody UserDto userDto) {
-        log.info("Обновление пользователя");
+        log.info("Обновление пользователя c id {}", id);
         return userService.updateUser(id, userDto);
     }
 
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable(value = "id") Long id) {
-        log.info("Пользователь удален");
+        log.info("Пользователь  c id {} удален", id);
         userService.deleteUserById(id);
     }
 }

@@ -24,13 +24,13 @@ public class RequestController {
     @PostMapping
     public ResponseEntity<Object> saveRequest(@RequestHeader(USER_ID) Long userId,
                                               @Valid @RequestBody RequestDto itemRequestDto) {
-        log.info("Создание нового запроса на вещь");
+        log.info("Создание нового запроса на вещь пользователем с id {}", userId);
         return requestClient.saveRequest(userId, itemRequestDto);
     }
 
     @GetMapping
     public ResponseEntity<Object> getRequestByOwnerRequest(@RequestHeader(USER_ID) @Positive Long userId) {
-        log.info("Просмотр списка запросов пользователя");
+        log.info("Просмотр списка запросов пользователя с id {}", userId);
         return requestClient.findRequestByUserId(userId);
     }
 
@@ -38,14 +38,14 @@ public class RequestController {
     public ResponseEntity<Object> getRequestFromOtherUsers(@RequestHeader(USER_ID) Long userId,
                                                            @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                                            @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
-        log.info("Просмотр списка запросов других пользователей");
+        log.info("Просмотр списка запросов других пользователей пользователем с id {}", userId);
         return requestClient.findRequestFromOtherUsers(userId, from, size);
     }
 
     @GetMapping("/{requestId}")
     public ResponseEntity<Object> getRequestById(@RequestHeader(USER_ID) @Positive Long userId,
                                                  @PathVariable(value = "requestId") @Positive Long id) {
-        log.info("Просмотр запроса по идентификатору");
+        log.info("Просмотр запроса по идентификатору {}", id);
         return requestClient.findRequestById(userId, id);
     }
 }

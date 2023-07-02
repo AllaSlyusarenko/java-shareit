@@ -41,13 +41,13 @@ public class UserController {
     @PatchMapping("/{idUser}")
     public ResponseEntity<Object> updateUser(@PathVariable(value = "idUser") @Positive Long id,
                                              @Validated(Update.class) @RequestBody UserDto userDto) {
-        log.info("Обновление пользователя");
+        log.info("Обновление пользователя c id {}", id);
         return userClient.updateUser(id, userDto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUserById(@PathVariable(value = "id") @Positive Long id) {
-        log.info("Пользователь удален");
+        log.info("Пользователь  c id {} удален", id);
         return userClient.deleteUserById(id);
     }
 }

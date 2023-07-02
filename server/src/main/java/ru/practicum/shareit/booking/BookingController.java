@@ -21,7 +21,7 @@ public class BookingController {
     @ResponseStatus(HttpStatus.CREATED)
     public BookingResponseDto saveBooking(@RequestHeader(USER_ID) Long userId,
                                           @RequestBody BookingRequestDto bookingRequestDto) {
-        log.info("Создание новой вещи");
+        log.info("Создание новой вещи пользователем {}", userId);
         return bookingService.saveBooking(userId, bookingRequestDto);
     }
 
@@ -29,14 +29,14 @@ public class BookingController {
     public BookingResponseDto approveBooking(@RequestHeader(USER_ID) Long userId,
                                              @PathVariable Long bookingId,
                                              @RequestParam Boolean approved) {
-        log.info("Подтверждение или отклонение запроса на бронирование");
+        log.info("Подтверждение или отклонение запроса на бронирование с Id {}", bookingId);
         return bookingService.approveBooking(userId, bookingId, approved);
     }
 
     @GetMapping("/{bookingId}")
     public BookingResponseDto getBookingById(@RequestHeader(USER_ID) Long userId,
                                              @PathVariable Long bookingId) {
-        log.info("Получение информации о бронировании по id");
+        log.info("Получение информации о бронировании по Id {}", bookingId);
         return bookingService.infoBooking(userId, bookingId);
     }
 
@@ -45,7 +45,7 @@ public class BookingController {
                                                    @RequestParam(defaultValue = "ALL") String state,
                                                    @RequestParam(value = "from", defaultValue = "0") Integer from,
                                                    @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        log.info("Получение списка всех бронирований пользователя");
+        log.info("Получение списка всех бронирований пользователя с Id {}", userId);
         return bookingService.allBookingUser(userId, state, from, size);
     }
 
@@ -54,7 +54,7 @@ public class BookingController {
                                                     @RequestParam(defaultValue = "ALL") String state,
                                                     @RequestParam(value = "from", defaultValue = "0") Integer from,
                                                     @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        log.info("Получение списка всех бронирований владельца");
+        log.info("Получение списка всех бронирований владельца с Id {}", ownerId);
         return bookingService.allBookingOwner(ownerId, state, from, size);
     }
 }

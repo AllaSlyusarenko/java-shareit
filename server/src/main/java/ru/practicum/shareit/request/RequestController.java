@@ -20,13 +20,13 @@ public class RequestController {
     @PostMapping
     public RequestResponsePostDto saveRequest(@RequestHeader(USER_ID) Long userId,
                                               @RequestBody RequestDto itemRequestDto) {
-        log.info("Создание нового запроса на вещь");
+        log.info("Создание нового запроса на вещь пользователем с id {}", userId);
         return requestService.saveRequest(userId, itemRequestDto);
     }
 
     @GetMapping
     public List<RequestResponseGetDto> getRequestByOwnerRequest(@RequestHeader(USER_ID) Long userId) {
-        log.info("Просмотр списка запросов пользователя");
+        log.info("Просмотр списка запросов пользователя с id {}", userId);
         return requestService.findRequestByUserId(userId);
     }
 
@@ -34,14 +34,14 @@ public class RequestController {
     public List<RequestResponseGetDto> getRequestFromOtherUsers(@RequestHeader(USER_ID) Long userId,
                                                                 @RequestParam(value = "from", defaultValue = "0") Integer from,
                                                                 @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        log.info("Просмотр списка запросов других пользователей");
+        log.info("Просмотр списка запросов других пользователей пользователем с id {}", userId);
         return requestService.findRequestFromOtherUsers(userId, from, size);
     }
 
     @GetMapping("/{requestId}")
     public RequestResponseGetDto getRequestById(@RequestHeader(USER_ID) Long userId,
                                                 @PathVariable(value = "requestId") Long id) {
-        log.info("Просмотр запроса по идентификатору");
+        log.info("Просмотр запроса по идентификатору {}", id);
         return requestService.findRequestById(userId, id);
     }
 }

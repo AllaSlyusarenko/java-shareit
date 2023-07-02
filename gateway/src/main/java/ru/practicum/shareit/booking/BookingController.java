@@ -34,14 +34,14 @@ public class BookingController {
     public ResponseEntity<Object> approveBooking(@RequestHeader(USER_ID) @Positive Long userId,
                                                  @PathVariable @Positive Long bookingId,
                                                  @RequestParam("approved") Boolean approved) {
-        log.info("Подтверждение или отклонение запроса на бронирование");
+        log.info("Подтверждение или отклонение запроса на бронирование с Id {}", bookingId);
         return bookingClient.approveBooking(userId, bookingId, approved);
     }
 
     @GetMapping("/{bookingId}")
     public ResponseEntity<Object> getBookingById(@RequestHeader(USER_ID) @Positive Long userId,
                                                  @PathVariable @Positive Long bookingId) {
-        log.info("Получение информации о бронировании по id");
+        log.info("Получение информации о бронировании по Id {}", bookingId);
         return bookingClient.getBooking(userId, bookingId);
     }
 
@@ -50,7 +50,7 @@ public class BookingController {
                                                  @RequestParam(defaultValue = "ALL") String state,
                                                  @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                                  @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
-        log.info("Получение списка всех бронирований пользователя");
+        log.info("Получение списка всех бронирований пользователя с Id {}", userId);
         return bookingClient.allBookingUser(userId, state, from, size);
     }
 
@@ -59,7 +59,7 @@ public class BookingController {
                                                   @RequestParam(defaultValue = "ALL") BookingState state,
                                                   @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                                   @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {
-        log.info("Получение списка всех бронирований владельца");
+        log.info("Получение списка всех бронирований владельца с Id {}", ownerId);
         return bookingClient.allBookingOwner(ownerId, state, from, size);
     }
 }
