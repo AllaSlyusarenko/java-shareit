@@ -1,0 +1,39 @@
+create TABLE IF NOT EXISTS users (
+  id    BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name  VARCHAR(150) NOT NULL,
+  email VARCHAR(320) NOT NULL,
+  CONSTRAINT UQ_USER_EMAIL UNIQUE (email)
+);
+
+create TABLE IF NOT EXISTS requests (
+  id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  description  VARCHAR(255) NOT NULL,
+  requestor_id BIGINT NOT NULL REFERENCES users(id) ON delete CASCADE,
+  created_date TIMESTAMP WITHOUT TIME ZONE NOT NULL
+);
+
+create TABLE IF NOT EXISTS items (
+  id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name         VARCHAR(150) NOT NULL,
+  description  VARCHAR(250) NOT NULL,
+  is_available boolean NOT NULL,
+  owner_id     BIGINT NOT NULL REFERENCES users(id) ON delete CASCADE,
+  request_id   BIGINT REFERENCES requests(id) ON delete CASCADE
+);
+
+create TABLE IF NOT EXISTS bookings (
+  id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  start_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  end_date   TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  item_id    BIGINT NOT NULL REFERENCES items(id) ON delete CASCADE,
+  booker_id  BIGINT NOT NULL REFERENCES users(id) ON delete CASCADE,
+  status     VARCHAR(20)
+);
+
+create TABLE IF NOT EXISTS comments (
+  id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  text       VARCHAR(350) NOT NULL,
+  item_id    BIGINT NOT NULL REFERENCES items(id) ON delete CASCADE,
+  author_id  BIGINT NOT NULL REFERENCES users(id) ON delete CASCADE,
+  created    TIMESTAMP WITHOUT TIME ZONE NOT NULL
+);
